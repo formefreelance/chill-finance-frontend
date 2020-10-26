@@ -78,7 +78,6 @@ const Balances: React.FC = () => {
   useEffect(() => {
     async function fetchTotalSupply() {
       const supply = await getChillSupply(chill);
-      console.log('supply====', supply);
       setTotalSupply(supply)
     }
     if (chill) {
