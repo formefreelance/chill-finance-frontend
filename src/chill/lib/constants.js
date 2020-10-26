@@ -50,10 +50,10 @@ export const contractAddresses = {
   //   42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
   // },
   chill: {
-    42: '0x64fc7ddD251dA35E1D4d8e117983fBf019cC273e',
+    42: '0xAEa6cF173dfe075EaAB3367208F487A20aCdeabd',
   },
   masterChef: {
-    42: '0xd5d5fE1cFbdaF8BD088B1128fEEbf7D4ae6C6e45',
+    42: '0x57d63EAA751Ea926F807324c34c69899a4Bc194C',
   },
   weth: {
     42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
@@ -92,19 +92,6 @@ export const supportedPools = [
     tokenSymbol: 'DAI',
     icon: '🍣',
   },
-  // {
-  //   pid: 0,
-  //   lpAddresses: {
-  //     42: '0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852',
-  //   },
-  //   tokenAddresses: {
-  //     42: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-  //   },
-  //   name: 'Tether Turtle',
-  //   symbol: 'USDT-ETH UNI-V2 LP',
-  //   tokenSymbol: 'USDT',
-  //   icon: '🐢',
-  // },
   {
     pid: 1,
     lpAddresses: {
@@ -121,16 +108,29 @@ export const supportedPools = [
   {
     pid: 2,
     lpAddresses: {
-      42: '0x3304b9DD0adA7F9E5f0F47e6cCE2a988cBceC6BE',
+      42: '0xAEa6cF173dfe075EaAB3367208F487A20aCdeabd',
     },
     tokenAddresses: {
-      42: '0x2316980921CD62B210B8d13F6129C4C8F0CFFb5a',
+      42: '0xb174c17249E1B44DE49727f99DeC7658684b07B2',
     },
     name: 'Donald CHILL',
     symbol: 'CHILL-ETH UNI-V2 LP',
     tokenSymbol: 'CHILL',
     icon: '🦆',
   },
+  // {
+  //   pid: 0,
+  //   lpAddresses: {
+  //     42: '0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852',
+  //   },
+  //   tokenAddresses: {
+  //     42: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+  //   },
+  //   name: 'Tether Turtle',
+  //   symbol: 'USDT-ETH UNI-V2 LP',
+  //   tokenSymbol: 'USDT',
+  //   icon: '🐢',
+  // },
   // {
   //   pid: 3,
   //   lpAddresses: {
