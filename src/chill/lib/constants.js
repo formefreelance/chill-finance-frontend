@@ -40,11 +40,20 @@ export const addressMap = {
 
 // Kovan chill-eth uni v2 : 0x3304b9DD0adA7F9E5f0F47e6cCE2a988cBceC6BE
 export const contractAddresses = {
+  // chill: {
+  //   42: '0x2316980921CD62B210B8d13F6129C4C8F0CFFb5a',
+  // },
+  // masterChef: {
+  //   42: '0xE0e42Bf2Ff1Ae7968930617300c36f584317f9cf',
+  // },
+  // weth: {
+  //   42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
+  // },
   chill: {
-    42: '0x2316980921CD62B210B8d13F6129C4C8F0CFFb5a',
+    42: '0x64fc7ddD251dA35E1D4d8e117983fBf019cC273e',
   },
   masterChef: {
-    42: '0xE0e42Bf2Ff1Ae7968930617300c36f584317f9cf',
+    42: '0xd5d5fE1cFbdaF8BD088B1128fEEbf7D4ae6C6e45',
   },
   weth: {
     42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
