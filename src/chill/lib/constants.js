@@ -50,10 +50,10 @@ export const contractAddresses = {
   //   42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
   // },
   chill: {
-    42: '0xb174c17249E1B44DE49727f99DeC7658684b07B2',
+    42: '0x58A2bC3cEB8fb401572d85dC7Bf6fB3Ac0476E0c',
   },
   masterChef: {
-    42: '0x57d63EAA751Ea926F807324c34c69899a4Bc194C',
+    42: '0xe4e8A668573dF6D7459A1cFA6C4f58ACFdF4F177',
   },
   weth: {
     42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
@@ -78,6 +78,9 @@ UNI-V2 LP Address on mainnet for reference
 12 CHILL 0xce84867c3c02b05dc570d0135103d3fb9cc19433
 */
 
+// stakingRewardsDaiETH: 0x3cb2425D0c307A9a8E18026d780CEf8dBCd64Cd1
+// unitoken: 0x7C3C162D635BF988e3842F5A58d83e3cdcc453fb
+
 export const supportedPools = [
   {
     pid: 0,
@@ -95,6 +98,19 @@ export const supportedPools = [
   {
     pid: 1,
     lpAddresses: {
+      42: '0xfF88A4E347c04dcC69e2368D8Ec092aFf3d792f7',
+    },
+    tokenAddresses: {
+      42: '0x58A2bC3cEB8fb401572d85dC7Bf6fB3Ac0476E0c',
+    },
+    name: 'Donald CHILL',
+    symbol: 'CHILL-ETH UNI-V2 LP',
+    tokenSymbol: 'CHILL',
+    icon: '🦆',
+  },
+  {
+    pid: 2,
+    lpAddresses: {
       42: '0x3C30B799bB64485FDB52f249DA0e74F67f35b5E7',
     },
     tokenAddresses: {
@@ -105,19 +121,7 @@ export const supportedPools = [
     tokenSymbol: 'BTC',
     icon: '🐌',
   },
-  {
-    pid: 2,
-    lpAddresses: {
-      42: '0xAEa6cF173dfe075EaAB3367208F487A20aCdeabd',
-    },
-    tokenAddresses: {
-      42: '0xb174c17249E1B44DE49727f99DeC7658684b07B2',
-    },
-    name: 'Donald CHILL',
-    symbol: 'CHILL-ETH UNI-V2 LP',
-    tokenSymbol: 'CHILL',
-    icon: '🦆',
-  },
+  
   // {
   //   pid: 0,
   //   lpAddresses: {

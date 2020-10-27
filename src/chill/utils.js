@@ -94,29 +94,34 @@ export const getTotalLPWethValue = async (
   pid,
 ) => {
   // Get balance of the token address
-  // console.log('lpContract====', lpContract.options.address);
-  // console.log('tokenContract====', tokenContract);
+  console.log('lpContract====', lpContract.options.address);
+  console.log('tokenContract====', tokenContract);
 
   const tokenAmountWholeLP = await tokenContract.methods
     .balanceOf(lpContract.options.address)
     .call()
-  // console.log('tokenAmountWholeLP====', tokenAmountWholeLP);
+
 
   const tokenDecimals = await tokenContract.methods.decimals().call()
   // Get the share of lpContract that masterChefContract owns
-  const balance = await lpContract.methods
-    .balanceOf(masterChefContract.options.address)
-    .call()
+  // const balance = await lpContract.methods
+  //   .balanceOf(masterChefContract.options.address)
+  //   .call()
+
+  console.log('pid===', pid)
+  const balance = await masterChefContract.methods.poolInfo(pid).call();
+  console.log('balance====', balance.totalPoolBalance);
+
   // Convert that into the portion of total lpContract = p1
   const totalSupply = await lpContract.methods.totalSupply().call()
   // Get total weth value for the lpContract = w1
   const lpContractWeth = await wethContract.methods
     .balanceOf(lpContract.options.address)
     .call()
-  // console.log('lpContractWeth+++', lpContractWeth);
+  console.log('lpContractWeth+++', lpContractWeth);
 
   // Return p1 * w1 * 2
-  const portionLp = new BigNumber(balance).div(new BigNumber(totalSupply))
+  const portionLp = new BigNumber(balance.totalPoolBalance).div(new BigNumber(totalSupply))
   const lpWethWorth = new BigNumber(lpContractWeth)
   const totalLpWethValue = portionLp.times(lpWethWorth).times(new BigNumber(2))
   // Calculate
@@ -124,15 +129,22 @@ export const getTotalLPWethValue = async (
     .times(portionLp)
     .div(new BigNumber(10).pow(tokenDecimals))
 
+    console.log('tokenAmount1+++', tokenAmount.toString());
+
+
   const wethAmount = new BigNumber(lpContractWeth)
     .times(portionLp)
     .div(new BigNumber(10).pow(18))
-    // const poolWeight =await getPoolWeight(masterChefContract, pid);
-    // console.log('tokenAmount+++', tokenAmount.toString());
-    // console.log('wethAmount+++', wethAmount.toString());
-    // console.log('totalWethValue+++', totalLpWethValue.div(new BigNumber(10).pow(18)).toString());
-    // console.log('tokenPriceInWeth+++', wethAmount.div(tokenAmount).toString());
-    // console.log('poolWeight+++', poolWeight.toString());
+
+  console.log('wethAmount1+++', wethAmount);
+
+
+    const poolWeight =await getPoolWeight(masterChefContract, pid);
+    console.log('tokenAmount+++', tokenAmount.toString());
+    console.log('wethAmount+++', wethAmount.toString());
+    console.log('totalWethValue+++', totalLpWethValue.div(new BigNumber(10).pow(18)).toString());
+    console.log('tokenPriceInWeth+++', wethAmount.div(tokenAmount).toString());
+    console.log('poolWeight+++', poolWeight.toString());
 
   return {
     tokenAmount,
