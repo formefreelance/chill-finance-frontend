@@ -192,6 +192,25 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "blockPerPhase",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "bonusEndBlock",
 		"outputs": [
@@ -285,6 +304,25 @@
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_index",
+				"type": "uint256"
+			}
+		],
+		"name": "getBlockPerPhaseByIndex",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -403,25 +441,6 @@
 			}
 		],
 		"name": "getMultiplier",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			}
-		],
-		"name": "getPhaseBlockByIndex",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -618,14 +637,8 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "phasesPerBlock",
+		"inputs": [],
+		"name": "phase5time",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -735,6 +748,42 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "_index",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_time",
+				"type": "uint256"
+			}
+		],
+		"name": "setAndEditPhaseTime",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_index",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_chillPerBlock",
+				"type": "uint256"
+			}
+		],
+		"name": "setBlockPerPhaseByIndex",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "_pid",
 				"type": "uint256"
 			},
@@ -778,30 +827,17 @@
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "_distributor",
+				"type": "address"
 			},
 			{
-				"internalType": "uint256",
-				"name": "_chillPerBlock",
-				"type": "uint256"
+				"internalType": "bool",
+				"name": "_isdistributor",
+				"type": "bool"
 			}
 		],
-		"name": "setPhaseBlockByIndex",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_stableDivider",
-				"type": "uint256"
-			}
-		],
-		"name": "setStableDivider",
+		"name": "setRewardDistributor",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -812,35 +848,16 @@
 				"internalType": "address",
 				"name": "_stablePair",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_stableDivider",
+				"type": "uint256"
 			}
 		],
 		"name": "setStablePairAddress",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "stakedWhitelistedLpAtAChill",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -886,19 +903,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transefrOwnershipOfChillToken",
-		"outputs": [],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
