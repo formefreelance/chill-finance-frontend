@@ -1,4 +1,4 @@
-export const chill = '0x58A2bC3cEB8fb401572d85dC7Bf6fB3Ac0476E0c'
-export const chillv2 = '0x58A2bC3cEB8fb401572d85dC7Bf6fB3Ac0476E0c'
-export const chillAddress = '0x58A2bC3cEB8fb401572d85dC7Bf6fB3Ac0476E0c'
-export const masterChefAddress = '0xe4e8A668573dF6D7459A1cFA6C4f58ACFdF4F177'
+export const chill = '0x7cEB846F2ab8F9785354d8B5F8A72d5414E41d50'
+export const chillv2 = '0x7cEB846F2ab8F9785354d8B5F8A72d5414E41d50'
+export const chillAddress = '0x7cEB846F2ab8F9785354d8B5F8A72d5414E41d50'
+export const masterChefAddress = '0x3300601e6e11B7C4F603d7b8a6EE9DCed0401212'

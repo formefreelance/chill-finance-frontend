@@ -1,4 +1,5 @@
 import { Contract } from 'web3-eth-contract'
+import BigNumber from 'bignumber.js'
 
 export interface Farm {
   pid: number
@@ -12,6 +13,7 @@ export interface Farm {
   icon: React.ReactNode
   id: string
   tokenSymbol: string
+  poolWeight: BigNumber
 }
 
 export interface FarmsContext {

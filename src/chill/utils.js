@@ -24,6 +24,22 @@ export const getPhaseTimeAndBlocks = async (masterChefContract) => {
   }
 }
 
+export const getNirvanaStatus = async (pid, account, masterChefContract) => {
+  try {
+    const userDetails  = await masterChefContract.methods
+      .userInfo(pid, account)
+      .call()
+      console.log('userDetails===', userDetails.startedBlock)
+    const nirvanstatus  = await masterChefContract.methods
+      .getNirvanaStatus(userDetails.startedBlock)
+      .call()
+      console.log('nirvanstatus===', nirvanstatus)
+    return nirvanstatus
+  } catch {
+    return new BigNumber(0)
+  }
+}
+
 export const getMasterChefAddress = (chill) => {
   return chill && chill.masterChefAddress
 }
@@ -71,6 +87,11 @@ export const getFarms = (chill) => {
         }),
       )
     : []
+}
+
+export const getAllocPoint = async (masterChefContract, pid) => {
+  const { allocPoint } = await masterChefContract.methods.poolInfo(pid).call()
+  return new BigNumber(allocPoint)
 }
 
 export const getPoolWeight = async (masterChefContract, pid) => {
@@ -136,9 +157,6 @@ export const getTotalLPWethValue = async (
     .times(portionLp)
     .div(new BigNumber(10).pow(18))
 
-  console.log('wethAmount1+++', wethAmount);
-
-
     const poolWeight =await getPoolWeight(masterChefContract, pid);
     console.log('tokenAmount+++', tokenAmount.toString());
     console.log('wethAmount+++', wethAmount.toString());
@@ -152,6 +170,7 @@ export const getTotalLPWethValue = async (
     totalWethValue: totalLpWethValue.div(new BigNumber(10).pow(18)),
     tokenPriceInWeth: wethAmount.div(tokenAmount),
     poolWeight: await getPoolWeight(masterChefContract, pid),
+    allocPoint: await getAllocPoint(masterChefContract, pid),
   }
 }
 

@@ -1,11 +1,13 @@
 import BigNumber from 'bignumber.js'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
+import { useWallet } from 'use-wallet'
 import styled from 'styled-components'
 import { Contract } from 'web3-eth-contract'
 import Button from '../../../components/Button'
 import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
 import CardIcon from '../../../components/CardIcon'
+import Sticker from '../../../components/Sticker'
 import IconButton from '../../../components/IconButton'
 import { AddIcon } from '../../../components/icons'
 import Label from '../../../components/Label'
@@ -17,9 +19,12 @@ import useStake from '../../../hooks/useStake'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import useUnstake from '../../../hooks/useUnstake'
+import useChill from '../../../hooks/useChill'
 import { getBalanceNumber } from '../../../utils/formatBalance'
+import { getNirvanaStatus, getMasterChefContract } from '../../../chill/utils'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
+import Spacer from '../../../components/Spacer'
 
 interface StakeProps {
   lpContract: Contract
@@ -29,6 +34,10 @@ interface StakeProps {
 
 const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
+  const [nirvana, setNirvana] = useState<BigNumber>()
+  const [isNirvana, setIsNirvavna] = useState(false)
+
+
 
   const allowance = useAllowance(lpContract)
   const { onApprove } = useApprove(lpContract)
@@ -38,6 +47,8 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
 
   const { onStake } = useStake(pid)
   const { onUnstake } = useUnstake(pid)
+  const { account } = useWallet()
+  const chill = useChill();
 
   const [onPresentDeposit] = useModal(
     <DepositModal
@@ -54,6 +65,22 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
       tokenName={tokenName}
     />,
   )
+  
+  useEffect(() => {
+    async function process() {
+      const nirvanstatus = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
+      if(getBalanceNumber(stakedBalance) > 0) {
+        if(nirvanstatus == 50) {
+          setIsNirvavna(true)
+        }
+        const multiplier = new BigNumber(nirvanstatus).div(100).plus(1)
+        setNirvana(multiplier)
+      }
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill, setNirvana, getBalanceNumber(stakedBalance)]);
 
   const handleApprove = useCallback(async () => {
     try {
@@ -68,14 +95,19 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
     }
   }, [onApprove, setRequestedApproval])
 
+
   return (
     <Card>
       <CardContent>
         <StyledCardContentInner>
           <StyledCardHeader>
+          {/* <Sticker>{`${isNirvana ? 'Nirvana' : Number(nirvana) === 50 ? 'Nirvana' : nirvana }`}</Sticker> */}
+          <Spacer/>
             <CardIcon>👨🏻‍🍳</CardIcon>
+            {console.log('getBalanceNumber(stakedBalance)===', getBalanceNumber(stakedBalance))}
             <Value value={getBalanceNumber(stakedBalance)} />
             <Label text={`${tokenName} Tokens Staked`} />
+            <Label text={`Multiplier Status: ${isNirvana ? 'Nirvana Stage-1.5' : Number(nirvana) ? nirvana : '1'  }%`} />
           </StyledCardHeader>
           <StyledCardActions>
             {!allowance.toNumber() ? (

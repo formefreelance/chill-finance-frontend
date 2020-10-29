@@ -7,6 +7,7 @@ import Button from '../../../components/Button'
 import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
 import CardIcon from '../../../components/CardIcon'
+import Sticker from '../../../components/Sticker'
 import Loader from '../../../components/Loader'
 import Spacer from '../../../components/Spacer'
 import { Farm } from '../../../contexts/Farms'
@@ -14,13 +15,15 @@ import useAllStakedValue, {
   StakedValue,
 } from '../../../hooks/useAllStakedValue'
 import useFarms from '../../../hooks/useFarms'
+import useBlock from '../../../hooks/useBlock'
 import useChill from '../../../hooks/useChill'
-import { getEarned, getMasterChefContract, getPhaseTimeAndBlocks } from '../../../chill/utils'
+import { getEarned, getMasterChefContract, getNirvanaStatus, getPhaseTimeAndBlocks } from '../../../chill/utils'
 import { bnToDec } from '../../../utils'
 import { masterChefAddress } from '../../../constants/tokenAddresses'
 
 interface FarmWithStakedValue extends Farm, StakedValue {
-  apy: BigNumber
+  apy: BigNumber,
+  allocPoint: BigNumber
 }
 
 let phaseTime: any;
@@ -29,15 +32,19 @@ let phaseBlocks: any;
 const FarmCards: React.FC = () => {
   const [farms] = useFarms()
   const { account } = useWallet()
+  const block = useBlock()
   const stakedValue = useAllStakedValue()
   const chill = useChill();
 
   useEffect(() => {
-    if (chill) {
+    async function process() {
       getPhaseTimeAndBlocks(getMasterChefContract(chill)).then((_phaseDetails) => {
         phaseTime = _phaseDetails[0]
         phaseBlocks = _phaseDetails[1]
       });
+    }
+    if (chill && account) {
+      process()
     }
   }, [chill]);
 
@@ -65,6 +72,9 @@ const FarmCards: React.FC = () => {
               .times(BLOCKS_PER_YEAR)
               .times(100)
               .div(stakedValue[i].totalWethValue)
+          : null,
+        allocPoint: stakedValue[i]
+          ? stakedValue[i].allocPoint.div(100)
           : null,
       }
       const newFarmRows = [...farmRows]
@@ -128,6 +138,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   useEffect(() => {
     async function fetchEarned() {
       if (chill) return
+      console.log("userDetails=========")
       const earned = await getEarned(
         getMasterChefContract(chill),
         lpTokenAddress,
@@ -148,6 +159,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
       <Card>
         <CardContent>
           <StyledContent>
+          <Sticker>{farm.allocPoint ? `${farm.allocPoint}x` : '0x'}</Sticker>
+          <Spacer/>
             <CardIcon>{farm.icon}</CardIcon>
             <StyledTitle>{farm.name}</StyledTitle>
             <StyledDetails>

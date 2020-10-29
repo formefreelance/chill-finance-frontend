@@ -14,7 +14,7 @@ import useAllStakedValue from '../../../hooks/useAllStakedValue'
 import useFarms from '../../../hooks/useFarms'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import useChill from '../../../hooks/useChill'
-import { getChillAddress, getChillSupply } from '../../../chill/utils'
+import { getChillAddress, getChillSupply, getPhaseTimeAndBlocks, getMasterChefContract, getNirvanaStatus } from '../../../chill/utils'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 
 const PendingRewards: React.FC = () => {
@@ -69,8 +69,14 @@ const PendingRewards: React.FC = () => {
   )
 }
 
+
+let phaseTime: any;
+let phaseBlocks: any;
+
 const Balances: React.FC = () => {
   const [totalSupply, setTotalSupply] = useState<BigNumber>()
+  const [chillPerBlocks, setTotasetChillPerBlocklSupply] = useState<BigNumber>()
+
   const chill = useChill()
   const chillBalance = useTokenBalance(getChillAddress(chill))
   const { account, ethereum }: { account: any; ethereum: any } = useWallet()
@@ -79,6 +85,10 @@ const Balances: React.FC = () => {
     async function fetchTotalSupply() {
       const supply = await getChillSupply(chill);
       setTotalSupply(supply)
+        getPhaseTimeAndBlocks(getMasterChefContract(chill)).then((_phaseDetails) => {
+          phaseTime = _phaseDetails[0]
+          phaseBlocks = _phaseDetails[1]
+        });
     }
     if (chill) {
       fetchTotalSupply()
@@ -120,7 +130,7 @@ const Balances: React.FC = () => {
         </CardContent>
         <Footnote>
           New rewards per block
-          <FootnoteValue>1,000 CHILL</FootnoteValue>
+          <FootnoteValue>{phaseBlocks/1e18} CHILL</FootnoteValue>
         </Footnote>
       </Card>
     </StyledWrapper>
