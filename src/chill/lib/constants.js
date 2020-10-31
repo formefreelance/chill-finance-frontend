@@ -80,7 +80,7 @@ export const supportedPools = [
     tokenAddresses: {
       42: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD',
     },
-    name: 'DAI-ETH PARTY!',
+    name: 'DAI-ETH',
     symbol: 'DAI-ETH UNI-V2 LP',
     tokenSymbol: 'DAI',
     icon: '😺',
@@ -93,7 +93,7 @@ export const supportedPools = [
     tokenAddresses: {
       42: '0x7cEB846F2ab8F9785354d8B5F8A72d5414E41d50',
     },
-    name: 'Donald CHILL',
+    name: 'CHILL-ETH',
     symbol: 'CHILL-ETH UNI-V2 LP',
     tokenSymbol: 'CHILL',
     icon: '🐱',
@@ -106,7 +106,7 @@ export const supportedPools = [
     tokenAddresses: {
       42: '0xd3a691c852cdb01e281545a27064741f0b7f6825',
     },
-    name: 'Circle Snail',
+    name: 'BTC-ETH',
     symbol: 'BTC-ETH UNI-V2 LP',
     tokenSymbol: 'BTC',
     icon: '😻',

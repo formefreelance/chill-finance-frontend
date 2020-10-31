@@ -68,12 +68,12 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
   
   useEffect(() => {
     async function process() {
-      const nirvanstatus = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
+      const nirvanaRank = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
       if(getBalanceNumber(stakedBalance) > 0) {
-        if(nirvanstatus == 50) {
+        if(nirvanaRank == 50) {
           setIsNirvavna(true)
         }
-        const multiplier = new BigNumber(nirvanstatus).div(100).plus(1)
+        const multiplier = new BigNumber(nirvanaRank).plus(100)
         setNirvana(multiplier)
       }
     }
@@ -107,7 +107,7 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
             {console.log('getBalanceNumber(stakedBalance)===', getBalanceNumber(stakedBalance))}
             <Value value={getBalanceNumber(stakedBalance)} />
             <Label text={`${tokenName} Tokens Staked`} />
-            <Label text={`Multiplier Status: ${isNirvana ? 'Nirvana Stage-1.5' : Number(nirvana) ? nirvana : '1'  }%`} />
+            <Label text={`Multiplier Status: ${isNirvana ? 'Nirvana Stage-1.5' : Number(nirvana) ? nirvana : '100'  }%`} />
           </StyledCardHeader>
           <StyledCardActions>
             {!allowance.toNumber() ? (
