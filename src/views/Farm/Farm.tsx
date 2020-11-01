@@ -23,6 +23,7 @@ const Farm: React.FC = () => {
     earnToken,
     name,
     icon,
+    iconSrc,
   } = useFarm(farmId) || {
     pid: 0,
     lpToken: '',
@@ -31,6 +32,7 @@ const Farm: React.FC = () => {
     earnToken: '',
     name: '',
     icon: '',
+    iconSrc: '',
   }
 
   useEffect(() => {
@@ -57,7 +59,7 @@ const Farm: React.FC = () => {
   return (
     <>
       <PageHeader
-        icon={icon}
+        icon={<img src={iconSrc} style={{ margin: '-60px 0px 0px -75px', width: '290px', height: '225px'}} />}
         subtitle={`Deposit ${lpTokenName}  Tokens and earn ${earnTokenName}`}
         title={name}
       />

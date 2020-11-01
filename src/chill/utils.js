@@ -71,6 +71,7 @@ export const getFarms = (chill) => {
           tokenContract,
           lpAddress,
           lpContract,
+          iconSrc,
         }) => ({
           pid,
           id: symbol,
@@ -84,6 +85,7 @@ export const getFarms = (chill) => {
           earnToken: 'chill',
           earnTokenAddress: chill.contracts.chill.options.address,
           icon,
+          iconSrc,
         }),
       )
     : []

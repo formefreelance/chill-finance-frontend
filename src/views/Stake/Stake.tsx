@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import chef from '../../assets/img/chef.png'
+import logo from '../../assets/img/logo.png'
 
 import { useParams } from 'react-router-dom'
 import { useWallet } from 'use-wallet'
@@ -52,7 +52,7 @@ const Farm: React.FC = () => {
       {!!account ? (
         <>
           <PageHeader
-            icon={<img src={chef} height="120" />}
+            icon={<img src={logo} height="120" />}
             title="Stake Chill Tokens & Earn Fees"
             subtitle="0.05% of all ChillSwap trades are rewarded to CHILL stakers"
           />

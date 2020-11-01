@@ -1,5 +1,11 @@
+import React from 'react'
 import BigNumber from 'bignumber.js/bignumber'
-import chef from "../../assets/img/chef.png";
+import cat1 from "../../assets/img/cat1.png";
+import cat2 from "../../assets/img/cat2.png";
+import cat3 from "../../assets/img/cat3.png";
+import cat4 from "../../assets/img/cat4.png";
+import cat5 from "../../assets/img/cat5.png";
+
 export const SUBTRACT_GAS_LIMIT = 100000
 
 const ONE_MINUTE_IN_SECONDS = new BigNumber(60)
@@ -39,11 +45,20 @@ export const INTEGERS = {
 // }
 
 export const contractAddresses = {
+  // chill: {
+  //   42: '0x7cEB846F2ab8F9785354d8B5F8A72d5414E41d50',
+  // },
+  // masterChef: {
+  //   42: '0x3300601e6e11B7C4F603d7b8a6EE9DCed0401212',
+  // },
+  // weth: {
+  //   42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
+  // },
   chill: {
-    42: '0x7cEB846F2ab8F9785354d8B5F8A72d5414E41d50',
+    42: '0x21A34eCB02c5DEf65036Df853bAe531b5E88bd47',
   },
   masterChef: {
-    42: '0x3300601e6e11B7C4F603d7b8a6EE9DCed0401212',
+    42: '0x0d17d6E6B0C19E7EDF33Eec20D6A84e765037067',
   },
   weth: {
     42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
@@ -83,23 +98,25 @@ export const supportedPools = [
     name: 'DAI-ETH',
     symbol: 'DAI-ETH UNI-V2 LP',
     tokenSymbol: 'DAI',
-    icon: '😺',
+    iconSrc: cat4,
+    icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
   },
   {
-    pid: 1,
+    pid: 2,
     lpAddresses: {
-      42: '0x22C648CD8B6a91d24E8449cBc8acF53fcf565aE0',
+      42: '0x1091c5F2b4c22A8f7cA0f49Bb7fDbD5d9e621e0d',
     },
     tokenAddresses: {
-      42: '0x7cEB846F2ab8F9785354d8B5F8A72d5414E41d50',
+      42: '0x21A34eCB02c5DEf65036Df853bAe531b5E88bd47',
     },
     name: 'CHILL-ETH',
     symbol: 'CHILL-ETH UNI-V2 LP',
     tokenSymbol: 'CHILL',
-    icon: '🐱',
+    iconSrc: cat5,
+    icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
   },
   {
-    pid: 2,
+    pid: 1,
     lpAddresses: {
       42: '0x3C30B799bB64485FDB52f249DA0e74F67f35b5E7',
     },
@@ -109,6 +126,7 @@ export const supportedPools = [
     name: 'BTC-ETH',
     symbol: 'BTC-ETH UNI-V2 LP',
     tokenSymbol: 'BTC',
-    icon: '😻',
+    iconSrc: cat3,
+    icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
   },
 ]

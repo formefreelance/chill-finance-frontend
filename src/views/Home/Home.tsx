@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import chef from '../../assets/img/chef.png'
+import logo from '../../assets/img/logo.png'
 import Button from '../../components/Button'
 import Container from '../../components/Container'
 import Page from '../../components/Page'
@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   return (
     <Page>
       <PageHeader
-        icon={<img src={chef} height={120} />}
+        icon={<img src={logo} style={{ margin: "-85px 0px 0px -93px", width: "330px", height: "280px"}} />}
         title="MasterMew is Ready"
         subtitle="Stake Uniswap LP tokens to claim your CHILL!"
       />

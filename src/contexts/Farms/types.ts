@@ -14,6 +14,7 @@ export interface Farm {
   id: string
   tokenSymbol: string
   poolWeight: BigNumber
+  iconSrc: string
 }
 
 export interface FarmsContext {
