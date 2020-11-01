@@ -25,6 +25,7 @@ import { getNirvanaStatus, getMasterChefContract } from '../../../chill/utils'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
 import Spacer from '../../../components/Spacer'
+import logo from '../../../assets/img/logo.png'
 
 interface StakeProps {
   lpContract: Contract
@@ -103,7 +104,7 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
           <StyledCardHeader>
           {/* <Sticker>{`${isNirvana ? 'Nirvana' : Number(nirvana) === 50 ? 'Nirvana' : nirvana }`}</Sticker> */}
           <Spacer/>
-            <CardIcon>👨🏻‍🍳</CardIcon>
+            <CardIcon>‍<img src={logo} style={{ marginTop: -4, width: "120px", height: "90px" }} /></CardIcon>
             {console.log('getBalanceNumber(stakedBalance)===', getBalanceNumber(stakedBalance))}
             <Value value={getBalanceNumber(stakedBalance)} />
             <Label text={`${tokenName} Tokens Staked`} />
