@@ -55,10 +55,10 @@ export const contractAddresses = {
   //   42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
   // },
   chill: {
-    42: '0x21A34eCB02c5DEf65036Df853bAe531b5E88bd47',
+    42: '0x0a3482D9bD6E31a3809dDb2720Baa90b87CAE47D',
   },
   masterChef: {
-    42: '0x0d17d6E6B0C19E7EDF33Eec20D6A84e765037067',
+    42: '0x20F123a867df51086D6f9307893208ab4947c737',
   },
   weth: {
     42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
@@ -102,12 +102,12 @@ export const supportedPools = [
     icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
   },
   {
-    pid: 2,
+    pid: 3,
     lpAddresses: {
-      42: '0x1091c5F2b4c22A8f7cA0f49Bb7fDbD5d9e621e0d',
+      42: '0x99B7706b2049893a6bC4CC6b8176902C865B1DD9',
     },
     tokenAddresses: {
-      42: '0x21A34eCB02c5DEf65036Df853bAe531b5E88bd47',
+      42: '0x0a3482D9bD6E31a3809dDb2720Baa90b87CAE47D',
     },
     name: 'CHILL-ETH',
     symbol: 'CHILL-ETH UNI-V2 LP',
