@@ -178,10 +178,6 @@
 		"type": "event"
 	},
 	{
-		"stateMutability": "payable",
-		"type": "fallback"
-	},
-	{
 		"inputs": [],
 		"name": "DELEGATION_TYPEHASH",
 		"outputs": [

@@ -128,6 +128,32 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "DEV_FEE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "DEV_TAX_FEE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -289,6 +315,16 @@
 				"internalType": "address",
 				"name": "_devaddr",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_devFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_devTaxFee",
+				"type": "uint256"
 			}
 		],
 		"name": "dev",
@@ -319,6 +355,34 @@
 		],
 		"name": "getBlockPerPhaseByIndex",
 		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBurnedDetails",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
 			{
 				"internalType": "uint256",
 				"name": "",
@@ -382,49 +446,6 @@
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_from",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "currentblock",
-				"type": "uint256"
-			}
-		],
-		"name": "getExtraMultiplier",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_pid",
-				"type": "uint256"
-			}
-		],
-		"name": "getExtraReward",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -549,6 +570,30 @@
 			}
 		],
 		"name": "isCheckInitialPeriod",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "isUserExist",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -702,6 +747,16 @@
 				"internalType": "uint256",
 				"name": "totalPoolBalance",
 				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "nirvanaRewardAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "nirvanaFee",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -715,6 +770,30 @@
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "poolUsers",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
@@ -839,6 +918,29 @@
 			}
 		],
 		"name": "setEthDivider",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_pid",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_nirvanaFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_nirvanaRewardAddress",
+				"type": "address"
+			}
+		],
+		"name": "setNirvanaDetails",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -997,6 +1099,25 @@
 			{
 				"internalType": "uint256",
 				"name": "startedBlock",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_pid",
+				"type": "uint256"
+			}
+		],
+		"name": "userPoollength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
 				"type": "uint256"
 			}
 		],

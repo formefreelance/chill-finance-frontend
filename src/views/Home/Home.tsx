@@ -7,6 +7,7 @@ import Page from '../../components/Page'
 import PageHeader from '../../components/PageHeader'
 import Spacer from '../../components/Spacer'
 import Balances from './components/Balances'
+import Burned from './components/Burned'
 
 const Home: React.FC = () => {
   return (
@@ -19,10 +20,12 @@ const Home: React.FC = () => {
 
       <Container>
         <Balances />
+        <Spacer/>
+        <Burned />
       </Container>
       <Spacer size="lg" />
       <StyledInfo>
-        🏆<b>Pro Tip</b>: CHILL-ETH UNI-V2 LP token pool yields TWICE more token
+        🏆<b>Pro Tip</b>: CHILL-ETH UNI-V2 LP token pool yields 3x more token
         rewards per block.
       </StyledInfo>
       <Spacer size="lg" />
@@ -31,7 +34,7 @@ const Home: React.FC = () => {
           margin: '0 auto',
         }}
       >
-        <Button text="🔪 See the Menu" to="/farms" variant="secondary" />
+        <Button text="See the Menu" to="/farms" variant="secondary" />
       </div>
     </Page>
   )

@@ -43,9 +43,11 @@ export const getNirvanaStatus = async (pid, account, masterChefContract) => {
 export const getMasterChefAddress = (chill) => {
   return chill && chill.masterChefAddress
 }
+
 export const getChillAddress = (chill) => {
   return chill && chill.chillAddress
 }
+
 export const getWethContract = (chill) => {
   return chill && chill.contracts && chill.contracts.weth
 }
@@ -107,6 +109,10 @@ export const getPoolWeight = async (masterChefContract, pid) => {
 
 export const getEarned = async (masterChefContract, pid, account) => {
   return masterChefContract.methods.pendingChill(pid, account).call()
+}
+
+export const getBurnedDetails = async (masterChefContract) => {
+  return masterChefContract.methods.getBurnedDetails().call()
 }
 
 export const getTotalLPWethValue = async (
