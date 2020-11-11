@@ -36,6 +36,7 @@ interface StakeProps {
 const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
   const [nirvana, setNirvana] = useState<BigNumber>()
+  const [nirvanaTax, setNirvanaTax] = useState<BigNumber>()
   const [isNirvana, setIsNirvavna] = useState(false)
 
 
@@ -69,13 +70,25 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
   
   useEffect(() => {
     async function process() {
+      const taxArray: number[] = [50, 40, 30, 20, 10, 0];
       const nirvanaRank = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
       if(getBalanceNumber(stakedBalance) > 0) {
         if(nirvanaRank == 50) {
           setIsNirvavna(true)
         }
-        const multiplier = new BigNumber(nirvanaRank).plus(100)
+        const multiplier = new BigNumber(nirvanaRank).div(10)
         setNirvana(multiplier)
+        if (nirvanaRank == 0) {
+          setNirvanaTax(new BigNumber(taxArray[0]))
+        } else if (nirvanaRank == 10) {
+          setNirvanaTax(new BigNumber(taxArray[1]))
+        } else if (nirvanaRank == 20) {
+          setNirvanaTax(new BigNumber(taxArray[2]))
+        } else if (nirvanaRank == 30) {
+          setNirvanaTax(new BigNumber(taxArray[3]))
+        } else if (nirvanaRank == 40) {
+          setNirvanaTax(new BigNumber(taxArray[4]))
+        } 
       }
     }
     if (chill && account) {
@@ -108,7 +121,8 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
             {console.log('getBalanceNumber(stakedBalance)===', getBalanceNumber(stakedBalance))}
             <Value value={getBalanceNumber(stakedBalance)} />
             <Label text={`${tokenName} Tokens Staked`} />
-            <Label text={`Multiplier Status: ${isNirvana ? 'Nirvana Stage-1.5' : Number(nirvana) ? nirvana : '100'  }%`} />
+            <Label text={`Current level: ${isNirvana ? '5' : Number(nirvana) ? nirvana : '0'  }`} />
+            <Label text={`${isNirvana ? '0' : nirvanaTax}% tax on harvest`} />
           </StyledCardHeader>
           <StyledCardActions>
             {!allowance.toNumber() ? (
