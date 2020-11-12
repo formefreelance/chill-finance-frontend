@@ -34,7 +34,7 @@ const Home: React.FC = () => {
           margin: '0 auto',
         }}
       >
-        <Button text="See the Menu" to="/farms" variant="secondary" />
+        <Button text="Go to Category" to="/farms" variant="secondary" />
       </div>
     </Page>
   )

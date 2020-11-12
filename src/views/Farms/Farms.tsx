@@ -28,7 +28,7 @@ const Farms: React.FC = () => {
               <PageHeader
                 icon={<img src={logo} style={{ margin: "-85px 0px 0px -93px", width: "330px", height: "280px"}} />}
                 subtitle="Earn CHILL tokens by staking Uniswap V2 LP Tokens."
-                title="Select Your Favorite Dishes"
+                title="Select Your Category"
               />
               <FarmCards />
             </Route>
