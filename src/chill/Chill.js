@@ -4,7 +4,7 @@ import { Contracts } from './lib/contracts.js'
 import { Account } from './lib/accounts.js'
 import { EVM } from './lib/evm.js'
 
-import { contractAddresses } from './lib/constants'
+import { airDropAddresses, contractAddresses } from './lib/constants'
 
 export class Chill {
   constructor(provider, networkId, testing, options) {
@@ -40,6 +40,7 @@ export class Chill {
     this.chillAddress = contractAddresses.chill[networkId]
     this.masterChefAddress = contractAddresses.masterChef[networkId]
     this.wethAddress = contractAddresses.weth[networkId]
+    this.airDropDaiEthAddress = airDropAddresses.daiEth[networkId]
   }
 
   async resetEVM() {

@@ -59,6 +59,10 @@ export const getChillContract = (chill) => {
   return chill && chill.contracts && chill.contracts.chill
 }
 
+export const getAirDropAddress = (chill) => {
+  return chill && chill.airdropAddress
+}
+
 export const getFarms = (chill) => {
   // console.log('pools===', chill.contracts.pools);
   return chill
@@ -123,23 +127,17 @@ export const getTotalLPWethValue = async (
   pid,
 ) => {
   // Get balance of the token address
-  console.log('lpContract====', lpContract.options.address);
-  console.log('tokenContract====', tokenContract);
 
   const tokenAmountWholeLP = await tokenContract.methods
     .balanceOf(lpContract.options.address)
     .call()
-
-
   const tokenDecimals = await tokenContract.methods.decimals().call()
   // Get the share of lpContract that masterChefContract owns
   // const balance = await lpContract.methods
   //   .balanceOf(masterChefContract.options.address)
   //   .call()
 
-  console.log('pid===', pid)
   const balance = await masterChefContract.methods.poolInfo(pid).call();
-  console.log('balance====', balance.totalPoolBalance);
 
   // Convert that into the portion of total lpContract = p1
   const totalSupply = await lpContract.methods.totalSupply().call()
@@ -147,7 +145,6 @@ export const getTotalLPWethValue = async (
   const lpContractWeth = await wethContract.methods
     .balanceOf(lpContract.options.address)
     .call()
-  console.log('lpContractWeth+++', lpContractWeth);
 
   // Return p1 * w1 * 2
   const portionLp = new BigNumber(balance.totalPoolBalance).div(new BigNumber(totalSupply))
@@ -158,20 +155,11 @@ export const getTotalLPWethValue = async (
     .times(portionLp)
     .div(new BigNumber(10).pow(tokenDecimals))
 
-    console.log('tokenAmount1+++', tokenAmount.toString());
-
-
   const wethAmount = new BigNumber(lpContractWeth)
     .times(portionLp)
     .div(new BigNumber(10).pow(18))
 
-    const poolWeight =await getPoolWeight(masterChefContract, pid);
-    console.log('tokenAmount+++', tokenAmount.toString());
-    console.log('wethAmount+++', wethAmount.toString());
-    console.log('totalWethValue+++', totalLpWethValue.div(new BigNumber(10).pow(18)).toString());
-    console.log('tokenPriceInWeth+++', wethAmount.div(tokenAmount).toString());
-    console.log('poolWeight+++', poolWeight.toString());
-
+  const poolWeight =await getPoolWeight(masterChefContract, pid);
   return {
     tokenAmount,
     wethAmount,
@@ -190,6 +178,10 @@ export const approve = async (lpContract, masterChefContract, account) => {
 
 export const getChillSupply = async (chill) => {
   return new BigNumber(await chill.contracts.chill.methods.totalSupply().call())
+}
+
+export const getChillBalanceOf = async (chill, address) => {
+  return new BigNumber(await chill.contracts.chill.methods.balanceOf(address).call())
 }
 
 export const stake = async (masterChefContract, pid, amount, account) => {
@@ -217,9 +209,20 @@ export const unstake = async (masterChefContract, pid, amount, account) => {
       return tx.transactionHash
     })
 }
+
 export const harvest = async (masterChefContract, pid, account) => {
   return masterChefContract.methods
     .deposit(pid, '0')
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      console.log(tx)
+      return tx.transactionHash
+    })
+}
+
+export const claimNirvanaIncentive = async (airdropContract, pid, account) => {
+  return airdropContract.methods
+    .claimNirvanaReward(pid)
     .send({ from: account })
     .on('transactionHash', (tx) => {
       console.log(tx)
@@ -251,4 +254,20 @@ export const redeem = async (masterChefContract, account) => {
   } else {
     alert('pool not active')
   }
+}
+
+export const getDaiEthAirDropContract = (chill) => {
+  return chill && chill.contracts && chill.contracts.airDropDaiETH
+}
+
+export const getDaiEthAirDropAddress = (airdropDaiEthContract) => {
+  return airdropDaiEthContract && airdropDaiEthContract.airDropDaiEthAddress
+}
+
+export const getDaiEthAirDropRewardAmount = (airdropDaiEthContract) => {
+  return airdropDaiEthContract.methods.rewardAmount().call();
+}
+
+export const getDaiEthAirDropTimeStamp = (airdropDaiEthContract) => {
+  return airdropDaiEthContract.methods.timeStamp().call();
 }

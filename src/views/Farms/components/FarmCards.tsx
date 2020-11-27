@@ -19,7 +19,6 @@ import useBlock from '../../../hooks/useBlock'
 import useChill from '../../../hooks/useChill'
 import { getEarned, getMasterChefContract, getNirvanaStatus, getPhaseTimeAndBlocks } from '../../../chill/utils'
 import { bnToDec } from '../../../utils'
-import { masterChefAddress } from '../../../constants/tokenAddresses'
 
 interface FarmWithStakedValue extends Farm, StakedValue {
   apy: BigNumber,
@@ -90,11 +89,9 @@ const FarmCards: React.FC = () => {
 
   return (
     <StyledCards>
-      {/* {console.log('rows[0]======', rows[0])} */}
       {!!rows[0].length ? (
         rows.map((farmRow, i) => (
           <StyledRow key={i}>
-            {/* {console.log('farmRow=====', farmRow)} */}
             {farmRow.map((farm, j) => (
               <React.Fragment key={j}>
                 <FarmCard farm={farm} />
@@ -138,7 +135,6 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   useEffect(() => {
     async function fetchEarned() {
       if (chill) return
-      console.log("userDetails=========")
       const earned = await getEarned(
         getMasterChefContract(chill),
         lpTokenAddress,

@@ -5,6 +5,7 @@ import cat2 from "../../assets/img/cat2.png";
 import cat3 from "../../assets/img/cat3.png";
 import cat4 from "../../assets/img/cat4.png";
 import cat5 from "../../assets/img/cat5.png";
+import useChill from "../../hooks/useChill";
 
 export const SUBTRACT_GAS_LIMIT = 100000
 
@@ -45,15 +46,6 @@ export const INTEGERS = {
 // }
 
 export const contractAddresses = {
-  // chill: {
-  //   42: '0x7cEB846F2ab8F9785354d8B5F8A72d5414E41d50',
-  // },
-  // masterChef: {
-  //   42: '0x3300601e6e11B7C4F603d7b8a6EE9DCed0401212',
-  // },
-  // weth: {
-  //   42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
-  // },
   chill: {
     42: '0xC059Ab991c99D2c08A511F8e04EE5EA85a2e97bf',
   },
@@ -62,7 +54,13 @@ export const contractAddresses = {
   },
   weth: {
     42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
-  },
+  }
+}
+
+export const airDropAddresses = {
+  daiEth: {
+    42: '0x18c9c95372106ED9f3f81a16C4454C628d3faeB8',
+  }
 }
 
 /*

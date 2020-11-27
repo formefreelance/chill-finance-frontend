@@ -14,6 +14,8 @@ import theme from './theme'
 import Farms from './views/Farms'
 import Home from './views/Home'
 import Stake from './views/Stake'
+import Nirvana from './views/Nirvana'
+
 
 const App: React.FC = () => {
   const [mobileMenu, setMobileMenu] = useState(false)
@@ -38,8 +40,8 @@ const App: React.FC = () => {
           <Route path="/farms">
             <Farms />
           </Route>
-          <Route path="/staking">
-            <Stake />
+          <Route path="/nirvana">
+            <Nirvana />
           </Route>
         </Switch>
       </Router>

@@ -108,7 +108,6 @@ const Burned: React.FC = () => {
         <CardContent>
           <StyledBalances>
             <StyledBalance>
-              <ChillIcon />
               <Spacer />
               <div style={{ flex: 1 }}>
                 <Label text="Last Day Burned(24 hours)" />
