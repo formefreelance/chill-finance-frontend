@@ -59,7 +59,7 @@ export const contractAddresses = {
 
 export const airDropAddresses = {
   daiEth: {
-    42: '0x18c9c95372106ED9f3f81a16C4454C628d3faeB8',
+    42: '0xE9b2927B071FC8dFf473282dD0aea176b9DE0DBa',
   }
 }
 
