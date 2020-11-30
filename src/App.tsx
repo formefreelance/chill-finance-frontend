@@ -56,7 +56,7 @@ const Providers: React.FC = ({ children }) => {
       <UseWalletProvider
         chainId={42}
         connectors={{
-          walletconnect: { rpcUrl: 'https://kovan.eth.aragon.network/' },
+          walletconnect: { rpcUrl: 'https://kovan.infura.io/v3/944f5399c18049d9920b3bc9c60583de' },
         }}
       >
         <ChillProvider>
