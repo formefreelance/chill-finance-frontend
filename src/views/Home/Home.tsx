@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   return (
     <Page>
       <PageHeader
-        icon={<img src={logo} style={{ margin: "-85px 0px 0px -93px", width: "330px", height: "280px"}} />}
+        icon={<img src={logo} style={{ margin: "-60px 0px 0px -76px", width: "300px", height: "255px"}} />}
         title="MasterMew is Ready"
         subtitle="Stake Uniswap LP tokens to claim your CHILL!"
       />
