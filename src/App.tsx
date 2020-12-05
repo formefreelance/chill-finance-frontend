@@ -56,8 +56,8 @@ const Providers: React.FC = ({ children }) => {
       chainId={1}
         connectors={{
           walletconnect: { 
-            // rpcUrl: 'https://mainnet.infura.io/v3/0546d521cf50424a8a252691171e5182'
-            rpcUrl: 'https://mainnet.eth.aragon.network/'
+            rpcUrl: 'https://mainnet.infura.io/v3/0546d521cf50424a8a252691171e5182'
+            // rpcUrl: 'https://mainnet.eth.aragon.network/'
           },
         }}
       >
