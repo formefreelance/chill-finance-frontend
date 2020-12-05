@@ -14,14 +14,12 @@ import ModalTitle from '../ModalTitle'
 import Spacer from '../Spacer'
 
 import WalletCard from './components/WalletCard'
-// import WalletConnectProvider from "@walletconnect/web3-provider";
-// const WalletConnectProvider = require("wallet-connect-provider");
 
 const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
   const { account, status, error, connector, ethereum, connect } = useWallet()
 
   useEffect(() => {
-    console.log('chainId2: ', ethereum)
+    console.log('ethereum: ', ethereum)
     if (account) {
       onDismiss()
     }
@@ -47,9 +45,6 @@ const WalletProviderModal: React.FC<ModalProps> = ({ onDismiss }) => {
               onConnect={() => connect('walletconnect')}
               title="WalletConnect"
             />
-
-          {/* <Button text="WalletConnect" variant="secondary" onClick={connect2} /> */}
-
           </StyledWalletCard>
         </StyledWalletsWrapper>
       </ModalContent>
