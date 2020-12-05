@@ -16,7 +16,6 @@ import Home from './views/Home'
 import Stake from './views/Stake'
 import Nirvana from './views/Nirvana'
 
-
 const App: React.FC = () => {
   const [mobileMenu, setMobileMenu] = useState(false)
 
@@ -53,10 +52,13 @@ const App: React.FC = () => {
 const Providers: React.FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
-      <UseWalletProvider
-        chainId={42}
+      <UseWalletProvider        
+      chainId={1}
         connectors={{
-          walletconnect: { rpcUrl: 'https://kovan.infura.io/v3/944f5399c18049d9920b3bc9c60583de' },
+          walletconnect: { 
+            // rpcUrl: 'https://mainnet.infura.io/v3/0546d521cf50424a8a252691171e5182'
+            rpcUrl: 'https://mainnet.eth.aragon.network/'
+          },
         }}
       >
         <ChillProvider>

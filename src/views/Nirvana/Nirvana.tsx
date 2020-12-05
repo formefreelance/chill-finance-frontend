@@ -26,7 +26,7 @@ const Farms: React.FC = () => {
           <>
             <Route exact path={path}>
               <PageHeader
-                icon={<img src={logo} style={{ margin: "-85px 0px 0px -93px", width: "330px", height: "280px"}} />}
+                icon={<img src={logo} style={{ margin: "-60px 0px 0px -76px", width: "300px", height: "255px"}} />}
                 subtitle="Claim nirvana incentive at every 8 hours."
                 title="Claim your Nirvana Incentive"
               />

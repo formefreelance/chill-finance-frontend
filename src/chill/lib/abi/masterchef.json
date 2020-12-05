@@ -12,9 +12,9 @@
 				"type": "address"
 			},
 			{
-				"internalType": "address",
-				"name": "_stablePair",
-				"type": "address"
+				"internalType": "uint256",
+				"name": "_startBlockOfChill",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "nonpayable",
@@ -225,6 +225,25 @@
 				"type": "uint256"
 			}
 		],
+		"name": "blockMilestone",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
 		"name": "blockPerPhase",
 		"outputs": [
 			{
@@ -257,35 +276,6 @@
 				"internalType": "contract ChillToken",
 				"name": "",
 				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_countPair",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_stablePair",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_liquiditybalance",
-				"type": "uint256"
-			}
-		],
-		"name": "countStakeAmount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -346,25 +336,6 @@
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			}
-		],
-		"name": "getBlockPerPhaseByIndex",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "getBurnedDetails",
 		"outputs": [
@@ -396,25 +367,6 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "_pid",
-				"type": "uint256"
-			}
-		],
-		"name": "getCheckInitialPeriod",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
 				"name": "_from",
 				"type": "uint256"
 			},
@@ -425,19 +377,6 @@
 			}
 		],
 		"name": "getCrossMultiplier",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getEthDivider",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -510,26 +449,19 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getStableDivider",
-		"outputs": [
+		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "",
+				"name": "_pid",
 				"type": "uint256"
 			}
 		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getStablePairAddress",
+		"name": "getPoolUsers",
 		"outputs": [
 			{
-				"internalType": "address",
+				"internalType": "address[]",
 				"name": "",
-				"type": "address"
+				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
@@ -544,19 +476,6 @@
 			}
 		],
 		"name": "getUniReward",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_stakeAddress",
-				"type": "address"
-			}
-		],
-		"name": "getUniRewardAndExit",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -609,6 +528,32 @@
 		"name": "massUpdatePools",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_pid",
+				"type": "uint256"
+			}
+		],
+		"name": "migrate",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "migrator",
+		"outputs": [
+			{
+				"internalType": "contract IMigratorChef",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -832,6 +777,16 @@
 				"type": "uint256"
 			},
 			{
+				"internalType": "uint256",
+				"name": "_nirvanaFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_nirvanaRewardAddress",
+				"type": "address"
+			},
+			{
 				"internalType": "bool",
 				"name": "_withUpdate",
 				"type": "bool"
@@ -853,6 +808,11 @@
 				"internalType": "uint256",
 				"name": "_time",
 				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_chillPerBlock",
+				"type": "uint256"
 			}
 		],
 		"name": "setAndEditPhaseTime",
@@ -869,11 +829,11 @@
 			},
 			{
 				"internalType": "uint256",
-				"name": "_chillPerBlock",
+				"name": "_blockMilestone",
 				"type": "uint256"
 			}
 		],
-		"name": "setBlockPerPhaseByIndex",
+		"name": "setBlockMilestoneByIndex",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -899,48 +859,12 @@
 	{
 		"inputs": [
 			{
-				"internalType": "bool",
-				"name": "_isCheck",
-				"type": "bool"
-			}
-		],
-		"name": "setCheckInitialPeriodAllPool",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_ethDivider",
-				"type": "uint256"
-			}
-		],
-		"name": "setEthDivider",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_pid",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_nirvanaFee",
-				"type": "uint256"
-			},
-			{
 				"internalType": "address",
-				"name": "_nirvanaRewardAddress",
+				"name": "_migrator",
 				"type": "address"
 			}
 		],
-		"name": "setNirvanaDetails",
+		"name": "setMigrator",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -959,24 +883,6 @@
 			}
 		],
 		"name": "setRewardDistributor",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_stablePair",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_stableDivider",
-				"type": "uint256"
-			}
-		],
-		"name": "setStablePairAddress",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

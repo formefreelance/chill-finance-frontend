@@ -7,11 +7,12 @@ import CardIcon from '../../../components/CardIcon'
 import Label from '../../../components/Label'
 import Value from '../../../components/Value'
 import useAirdrop from '../../../hooks/useAirdrop'
-import useChill from '../../../hooks/useChill'
+import useTimer from '../../../hooks/useTimer'
+// import useChill from '../../../hooks/useChill'
 import { getBalanceNumber } from '../../../utils/formatBalance'
-import { getDaiEthAirDropRewardAmount, getDaiEthAirDropContract, getChillBalanceOf, getDaiEthAirDropTimeStamp } from '../../../chill/utils'
-import BigNumber from 'bignumber.js'
-import { airDropAddresses } from '../../../chill/lib/constants'
+// import { getDaiEthAirDropRewardAmount, getDaiEthAirDropContract, getChillBalanceOf, getDaiEthAirDropTimeStamp } from '../../../chill/utils'
+// import BigNumber from 'bignumber.js'
+// import { airDropAddresses } from '../../../chill/lib/constants'
 import Spacer from '../../../components/Spacer'
 
 interface ClaimProps {
@@ -21,68 +22,70 @@ interface ClaimProps {
 }
 
 const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
-  const [rewardAmount, setReward] = useState(new BigNumber(0))
-  const [totalBalanceReward, setTotalBalanceReward] = useState(new BigNumber(0))
-  const [timeStamp, setTimeStamp] = useState(Number)
-  const [days, setDays] = useState(Number)
-  const [hours, setHours] = useState(Number)
-  const [minutes, setMinutes] = useState(Number)
-  const [seconds, setSeconds] = useState(Number)
+  // const [rewardAmount, setReward] = useState(new BigNumber(0))
+  // const [totalBalanceReward, setTotalBalanceReward] = useState(new BigNumber(0))
+  // const [timeStamp, setTimeStamp] = useState(Number)
+  // const [days, setDays] = useState(Number)
+  // const [hours, setHours] = useState(Number)
+  // const [minutes, setMinutes] = useState(Number)
+  // const [seconds, setSeconds] = useState(Number)
 
   const [pendingTx, setPendingTx] = useState(false)
   const { onAirdrop } = useAirdrop(pid)
-  const chill = useChill()
+  // const chill = useChill()
+  const { totalBalanceReward, rewardAmount, days, hours, minutes, seconds } = useTimer(pid)
+  console.log('nirvanaDetails1: ', totalBalanceReward)
 
-  useEffect(() => {
-    async function getReward() {
-      let airdropContract;
-      if (pid == 0) {
-        const networkId = 42;
-        airdropContract = getDaiEthAirDropContract(chill);
-        const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.daiEth[networkId]);
-        setTotalBalanceReward(new BigNumber(totalBalanceRewards))
-      }
-      if(airdropContract) {
-        getDaiEthAirDropRewardAmount(airdropContract).then((reward) => {
-          setReward(new BigNumber(reward));
-        });
-        getDaiEthAirDropTimeStamp(airdropContract).then((timeStamp) => {
-          setTimeStamp(timeStamp);
-        });
-      }
-    }
-    if (chill) {
-      getReward()
-    }
-  }, [chill]);
+  // useEffect(() => {
+  //   async function getReward() {
+  //     let airdropContract;
+  //     if (pid == 0) {
+  //       const networkId = 1;
+  //       airdropContract = getDaiEthAirDropContract(chill);
+  //       const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.daiEth[networkId]);
+  //       setTotalBalanceReward(new BigNumber(totalBalanceRewards))
+  //     }
+  //     if(airdropContract) {
+  //       getDaiEthAirDropRewardAmount(airdropContract).then((reward) => {
+  //         setReward(new BigNumber(reward));
+  //       });
+  //       getDaiEthAirDropTimeStamp(airdropContract).then((timeStamp) => {
+  //         setTimeStamp(timeStamp);
+  //       });
+  //     }
+  //   }
+  //   if (chill) {
+  //     getReward()
+  //   }
+  // }, [chill]);
 
-  useEffect(() => {
-    async function timer() {
-      const x = setInterval(() => {
-        if(timeStamp>0) {
-        const now = new Date().getTime();
-        const distance = (timeStamp*1000) - now;
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        setDays(days)
-        setHours(hours)
-        setMinutes(minutes)
-        setSeconds(seconds)
-          if (distance < 0) {
-            setDays(0)
-            setHours(0)
-            setMinutes(0)
-            setSeconds(0)
-          }
-        }
-      }, 1000);
-    }
-    if (chill) {
-      timer()
-    }
-  }, [chill, timeStamp]);
+  // useEffect(() => {
+  //   async function timer() {
+  //     const x = setInterval(() => {
+  //       if(timeStamp>0) {
+  //       const now = new Date().getTime();
+  //       const distance = (timeStamp*1000) - now;
+  //       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  //       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  //       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  //       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  //       setDays(days)
+  //       setHours(hours)
+  //       setMinutes(minutes)
+  //       setSeconds(seconds)
+  //         if (distance < 0) {
+  //           setDays(0)
+  //           setHours(0)
+  //           setMinutes(0)
+  //           setSeconds(0)
+  //         }
+  //       }
+  //     }, 1000);
+  //   }
+  //   if (chill) {
+  //     timer()
+  //   }
+  // }, [chill, timeStamp]);
 
   return (
     <Card>
@@ -91,7 +94,6 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
           <StyledCardHeader>
             <CardIcon>{<img src={iconSrc} style={{ marginTop: -4, width: "120px", height: "90px" }} />}</CardIcon>
             <StyledTitle>{name}</StyledTitle>
-
             <Label text="Total Reward Pool" />
             <Value value={getBalanceNumber(totalBalanceReward)} />
             <Spacer/>

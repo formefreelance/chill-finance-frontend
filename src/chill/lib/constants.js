@@ -46,20 +46,29 @@ export const INTEGERS = {
 // }
 
 export const contractAddresses = {
+  // chill: {
+  //   42: '0xC059Ab991c99D2c08A511F8e04EE5EA85a2e97bf',
+  // },
+  // masterChef: {
+  //   42: '0xa15E697806711003E635bEe08CA049130C4917fd',
+  // },
+  // weth: {
+  //   42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
+  // }
   chill: {
-    42: '0xC059Ab991c99D2c08A511F8e04EE5EA85a2e97bf',
+    1: '0xD6689f303fA491f1fBba919C1AFa619Bd8E595e3',
   },
   masterChef: {
-    42: '0xa15E697806711003E635bEe08CA049130C4917fd',
+    1: '0xa7fB8657d5d23D748AcD35EAbd87D1b926c97cb8',
   },
   weth: {
-    42: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
+    1: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
   }
 }
 
 export const airDropAddresses = {
   daiEth: {
-    42: '0xE9b2927B071FC8dFf473282dD0aea176b9DE0DBa',
+    1: '0xE9b2927B071FC8dFf473282dD0aea176b9DE0DBa',
   }
 }
 
@@ -84,47 +93,94 @@ UNI-V2 LP Address on mainnet for reference
 // stakingRewardsDaiETH: 0x3cb2425D0c307A9a8E18026d780CEf8dBCd64Cd1
 // unitoken: 0x7C3C162D635BF988e3842F5A58d83e3cdcc453fb
 
+// Kovan
+// export const supportedPools = [
+//   {
+//     pid: 0,
+//     lpAddresses: {
+//       42: '0xBbB8eeA618861940FaDEf3071e79458d4c2B42e3',
+//     },
+//     tokenAddresses: {
+//       42: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD',
+//     },
+//     name: 'DAI-ETH',
+//     symbol: 'DAI-ETH UNI-V2 LP',
+//     tokenSymbol: 'DAI',
+//     iconSrc: cat4,
+//     icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+//   },
+//   {
+//     pid: 1,
+//     lpAddresses: {
+//       42: '0x895304AC31f3fA5D8b215d7B04cC6C2D0677E0b0',
+//     },
+//     tokenAddresses: {
+//       42: '0xC059Ab991c99D2c08A511F8e04EE5EA85a2e97bf',
+//     },
+//     name: 'CHILL-ETH',
+//     symbol: 'CHILL-ETH UNI-V2 LP',
+//     tokenSymbol: 'CHILL',
+//     iconSrc: cat5,
+//     icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+//   },
+//   {
+//     pid: 2,
+//     lpAddresses: {
+//       42: '0x3C30B799bB64485FDB52f249DA0e74F67f35b5E7',
+//     },
+//     tokenAddresses: {
+//       42: '0xd3a691c852cdb01e281545a27064741f0b7f6825',
+//     },
+//     name: 'BTC-ETH',
+//     symbol: 'BTC-ETH UNI-V2 LP',
+//     tokenSymbol: 'BTC',
+//     iconSrc: cat3,
+//     icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+//   },
+// ]
+
+// Mainnet
 export const supportedPools = [
-  {
-    pid: 0,
-    lpAddresses: {
-      42: '0xBbB8eeA618861940FaDEf3071e79458d4c2B42e3',
-    },
-    tokenAddresses: {
-      42: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD',
-    },
-    name: 'DAI-ETH',
-    symbol: 'DAI-ETH UNI-V2 LP',
-    tokenSymbol: 'DAI',
-    iconSrc: cat4,
-    icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
-  },
-  {
-    pid: 1,
-    lpAddresses: {
-      42: '0x895304AC31f3fA5D8b215d7B04cC6C2D0677E0b0',
-    },
-    tokenAddresses: {
-      42: '0xC059Ab991c99D2c08A511F8e04EE5EA85a2e97bf',
-    },
-    name: 'CHILL-ETH',
-    symbol: 'CHILL-ETH UNI-V2 LP',
-    tokenSymbol: 'CHILL',
-    iconSrc: cat5,
-    icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
-  },
-  {
-    pid: 2,
-    lpAddresses: {
-      42: '0x3C30B799bB64485FDB52f249DA0e74F67f35b5E7',
-    },
-    tokenAddresses: {
-      42: '0xd3a691c852cdb01e281545a27064741f0b7f6825',
-    },
-    name: 'BTC-ETH',
-    symbol: 'BTC-ETH UNI-V2 LP',
-    tokenSymbol: 'BTC',
-    iconSrc: cat3,
-    icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
-  },
+  // {
+  //   pid: 0,
+  //   lpAddresses: {
+  //     1: '0xBbB8eeA618861940FaDEf3071e79458d4c2B42e3',
+  //   },
+  //   tokenAddresses: {
+  //     1: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD',
+  //   },
+  //   name: 'DAI-ETH',
+  //   symbol: 'DAI-ETH UNI-V2 LP',
+  //   tokenSymbol: 'DAI',
+  //   iconSrc: cat4,
+  //   icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+  // },
+  // {
+  //   pid: 1,
+  //   lpAddresses: {
+  //     1: '0x895304AC31f3fA5D8b215d7B04cC6C2D0677E0b0',
+  //   },
+  //   tokenAddresses: {
+  //     1: '0xC059Ab991c99D2c08A511F8e04EE5EA85a2e97bf',
+  //   },
+  //   name: 'CHILL-ETH',
+  //   symbol: 'CHILL-ETH UNI-V2 LP',
+  //   tokenSymbol: 'CHILL',
+  //   iconSrc: cat5,
+  //   icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+  // },
+  // {
+  //   pid: 2,
+  //   lpAddresses: {
+  //     1: '0x3C30B799bB64485FDB52f249DA0e74F67f35b5E7',
+  //   },
+  //   tokenAddresses: {
+  //     1: '0xd3a691c852cdb01e281545a27064741f0b7f6825',
+  //   },
+  //   name: 'BTC-ETH',
+  //   symbol: 'BTC-ETH UNI-V2 LP',
+  //   tokenSymbol: 'BTC',
+  //   iconSrc: cat3,
+  //   icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+  // },
 ]

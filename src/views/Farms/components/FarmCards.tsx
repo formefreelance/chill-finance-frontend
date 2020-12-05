@@ -17,7 +17,7 @@ import useAllStakedValue, {
 import useFarms from '../../../hooks/useFarms'
 import useBlock from '../../../hooks/useBlock'
 import useChill from '../../../hooks/useChill'
-import { getEarned, getMasterChefContract, getNirvanaStatus, getPhaseTimeAndBlocks } from '../../../chill/utils'
+import { getEarned, getMasterChefContract, getPhaseTimeAndBlocks } from '../../../chill/utils'
 import { bnToDec } from '../../../utils'
 
 interface FarmWithStakedValue extends Farm, StakedValue {

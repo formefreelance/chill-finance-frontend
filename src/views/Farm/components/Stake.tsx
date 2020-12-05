@@ -39,8 +39,6 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
   const [nirvanaTax, setNirvanaTax] = useState<BigNumber>()
   const [isNirvana, setIsNirvavna] = useState(false)
 
-
-
   const allowance = useAllowance(lpContract)
   const { onApprove } = useApprove(lpContract)
 
@@ -88,7 +86,11 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName }) => {
           setNirvanaTax(new BigNumber(taxArray[3]))
         } else if (nirvanaRank == 40) {
           setNirvanaTax(new BigNumber(taxArray[4]))
-        } 
+        } else {
+          setNirvanaTax(new BigNumber(0))
+        }
+      } else {
+        setNirvanaTax(new BigNumber(0))
       }
     }
     if (chill && account) {

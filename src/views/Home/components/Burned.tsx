@@ -14,7 +14,7 @@ import useAllStakedValue from '../../../hooks/useAllStakedValue'
 import useFarms from '../../../hooks/useFarms'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import useChill from '../../../hooks/useChill'
-import { getChillAddress, getChillSupply, getPhaseTimeAndBlocks, getMasterChefContract, getBurnedDetails } from '../../../chill/utils'
+import { getMasterChefContract, getBurnedDetails } from '../../../chill/utils'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 
 const PendingRewards: React.FC = () => {
