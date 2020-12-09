@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import logo from '../../assets/img/small_logo.png'
+import logo from '../../assets/img/chillicon.png'
 
 const Logo: React.FC = () => {
   return (
     <StyledLogo to="/">
-      <img src={logo} height="32" style={{ marginTop: -4, height: "45px", width: "45px" }} />
+      <img src={logo} height="32" style={{ marginTop: -4, height: "100px", width: "100px" }} />
       <StyledText>
         ChillSwap
       </StyledText>

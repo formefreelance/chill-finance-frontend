@@ -8,5 +8,5 @@
 export const chill = '0xD6689f303fA491f1fBba919C1AFa619Bd8E595e3'
 export const chillv2 = '0xD6689f303fA491f1fBba919C1AFa619Bd8E595e3'
 export const chillAddress = '0xD6689f303fA491f1fBba919C1AFa619Bd8E595e3'
-export const masterChefAddress = '0xa7fB8657d5d23D748AcD35EAbd87D1b926c97cb8'
+export const masterChefAddress = '0x4ad97fd79F8a2aE0e5415821BC06781bF5a164e1'
 

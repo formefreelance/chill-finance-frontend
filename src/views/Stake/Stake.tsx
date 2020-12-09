@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import logo from '../../assets/img/logo.png'
+import logo from '../../assets/img/chillicon.png'
 
 import { useParams } from 'react-router-dom'
 import { useWallet } from 'use-wallet'

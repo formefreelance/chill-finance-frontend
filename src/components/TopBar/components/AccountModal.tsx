@@ -14,7 +14,7 @@ import ModalContent from '../../ModalContent'
 import ModalTitle from '../../ModalTitle'
 import Spacer from '../../Spacer'
 import Value from '../../Value'
-import cat2 from "../../../assets/img/cat2.png";
+import chillicon from "../../../assets/img/chillicon.png";
 
 const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
   const { account, reset } = useWallet()
@@ -36,7 +36,7 @@ const AccountModal: React.FC<ModalProps> = ({ onDismiss }) => {
         <div style={{ display: 'flex' }}>
           <StyledBalanceWrapper>
             <CardIcon>
-              <span><img src={cat2} style={{ marginTop: 7, width: "120px", height: "90px" }} /></span>
+              <span><img src={chillicon} style={{ marginTop: 7, width: "120px", height: "120px" }} /></span>
             </CardIcon>
             <StyledBalance>
               <Value value={getBalanceNumber(chillBalance)} />

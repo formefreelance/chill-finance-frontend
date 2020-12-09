@@ -9,7 +9,7 @@ import Value from '../../../components/Value'
 import useEarnings from '../../../hooks/useEarnings'
 import useReward from '../../../hooks/useReward'
 import { getBalanceNumber } from '../../../utils/formatBalance'
-import cat2 from "../../../assets/img/cat2.png";
+import chillicon from "../../../assets/img/chillicon.png";
 
 interface HarvestProps {
   pid: number
@@ -25,7 +25,7 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
       <CardContent>
         <StyledCardContentInner>
           <StyledCardHeader>
-            <CardIcon><img src={cat2} style={{ marginTop: -4, width: "120px", height: "90px" }} /></CardIcon>
+            <CardIcon><img src={chillicon} style={{ marginTop: -4, width: "120px", height: "90px" }} /></CardIcon>
             <Value value={getBalanceNumber(earnings)} />
             <Label text="CHILL Earned" />
           </StyledCardHeader>

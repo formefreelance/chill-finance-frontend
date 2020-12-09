@@ -5,7 +5,6 @@ import cat2 from "../../assets/img/cat2.png";
 import cat3 from "../../assets/img/cat3.png";
 import cat4 from "../../assets/img/cat4.png";
 import cat5 from "../../assets/img/cat5.png";
-import useChill from "../../hooks/useChill";
 
 export const SUBTRACT_GAS_LIMIT = 100000
 
@@ -59,7 +58,7 @@ export const contractAddresses = {
     1: '0xD6689f303fA491f1fBba919C1AFa619Bd8E595e3',
   },
   masterChef: {
-    1: '0xa7fB8657d5d23D748AcD35EAbd87D1b926c97cb8',
+    1: '0x4ad97fd79F8a2aE0e5415821BC06781bF5a164e1',
   },
   weth: {
     1: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
@@ -107,7 +106,7 @@ UNI-V2 LP Address on mainnet for reference
 //     symbol: 'DAI-ETH UNI-V2 LP',
 //     tokenSymbol: 'DAI',
 //     iconSrc: cat4,
-//     icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+//     icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
 //   },
 //   {
 //     pid: 1,
@@ -121,7 +120,7 @@ UNI-V2 LP Address on mainnet for reference
 //     symbol: 'CHILL-ETH UNI-V2 LP',
 //     tokenSymbol: 'CHILL',
 //     iconSrc: cat5,
-//     icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+//     icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
 //   },
 //   {
 //     pid: 2,
@@ -135,7 +134,7 @@ UNI-V2 LP Address on mainnet for reference
 //     symbol: 'BTC-ETH UNI-V2 LP',
 //     tokenSymbol: 'BTC',
 //     iconSrc: cat3,
-//     icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+//     icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
 //   },
 // ]
 
@@ -153,7 +152,7 @@ export const supportedPools = [
   //   symbol: 'DAI-ETH UNI-V2 LP',
   //   tokenSymbol: 'DAI',
   //   iconSrc: cat4,
-  //   icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+  //   icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
   // },
   // {
   //   pid: 1,
@@ -167,7 +166,7 @@ export const supportedPools = [
   //   symbol: 'CHILL-ETH UNI-V2 LP',
   //   tokenSymbol: 'CHILL',
   //   iconSrc: cat5,
-  //   icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+  //   icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
   // },
   // {
   //   pid: 2,
@@ -181,6 +180,6 @@ export const supportedPools = [
   //   symbol: 'BTC-ETH UNI-V2 LP',
   //   tokenSymbol: 'BTC',
   //   iconSrc: cat3,
-  //   icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "90px" }} />,
+  //   icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
   // },
 ]

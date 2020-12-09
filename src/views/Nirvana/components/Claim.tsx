@@ -92,7 +92,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
       <CardContent>
         <StyledCardContentInner>
           <StyledCardHeader>
-            <CardIcon>{<img src={iconSrc} style={{ marginTop: -4, width: "120px", height: "90px" }} />}</CardIcon>
+            <CardIcon>{<img src={iconSrc} style={{ marginTop: -4, width: "120px", height: "120px" }} />}</CardIcon>
             <StyledTitle>{name}</StyledTitle>
             <Label text="Total Reward Pool" />
             <Value value={getBalanceNumber(totalBalanceReward)} />

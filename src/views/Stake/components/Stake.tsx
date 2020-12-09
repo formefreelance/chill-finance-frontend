@@ -20,7 +20,7 @@ import useUnstake from '../../../hooks/useUnstake'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
-import logo from '../../../assets/img/logo.png'
+import logo from '../../../assets/img/chillicon.png'
 
 interface StakeProps {
   lpContract: Contract

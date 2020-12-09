@@ -59,7 +59,7 @@ const Farm: React.FC = () => {
   return (
     <>
       <PageHeader
-        icon={<img src={iconSrc} style={{ margin: '-60px 0px 0px -75px', width: '290px', height: '225px'}} />}
+        icon={<img src={iconSrc} style={{ margin: "-60px 0px 0px -116px", width: "400px", height: "400px"}} />}
         subtitle={`Deposit ${lpTokenName}  Tokens and earn ${earnTokenName}`}
         title={name}
       />
@@ -74,10 +74,15 @@ const Farm: React.FC = () => {
               lpContract={lpContract}
               pid={pid}
               tokenName={lpToken.toUpperCase()}
+              icon={iconSrc}
             />
           </StyledCardWrapper>
         </StyledCardsWrapper>
         <Spacer size="lg" />
+        <StyledInfo>
+        ⚠️ Maximum $20000 worth of LP tokens can be deposited during the first 5 days, if you deposit more your transaction will fail
+        </StyledInfo>
+        <Spacer size="sm" />
         <StyledInfo>
           ⭐️ Every time you stake and unstake LP tokens, the contract will
           automagically harvest CHILL rewards for you!

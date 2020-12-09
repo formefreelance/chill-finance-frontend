@@ -1,5 +1,5 @@
 import React from 'react'
-import cat2 from "../../assets/img/cat2.png";
+import chillicon from "../../assets/img/chillicon.png";
 import CardIcon from "../CardIcon";
 interface ChillIconProps {
   size?: number
@@ -16,7 +16,7 @@ const ChillIcon: React.FC<ChillIconProps> = ({ size = 36, v1, v2, v3 }) => (
       filter: v1 ? 'saturate(0.5)' : undefined,
     }}
   >
-    <CardIcon><img src={cat2} style={{ marginTop: -4, width: "120px", height: "90px" }} /></CardIcon>
+    <CardIcon><img src={chillicon} style={{ marginTop: 0, width: "120px", height: "120px" }} /></CardIcon>
   </span>
 )
 
