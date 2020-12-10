@@ -12,7 +12,7 @@ const Nav: React.FC = () => {
       </StyledLink>
       <StyledLink
         target="_blank"
-        href="https://etherscan.io/address/0xddBDfb8FAc34863fd97e6ff52B95cF257C3c2721#code"
+        href="https://info.uniswap.org/pair/0xddBDfb8FAc34863fd97e6ff52B95cF257C3c2721"
       >
         Uniswap CHILL-ETH
       </StyledLink>

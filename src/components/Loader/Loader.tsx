@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import CardIcon from '../CardIcon'
-import chillicon from "../../assets/img/chillicon.png" 
+import logo from "../../assets/img/cat5.png" 
 interface LoaderProps {
   text?: string
 }
@@ -11,7 +11,7 @@ const Loader: React.FC<LoaderProps> = ({ text }) => {
   return (
     <StyledLoader>
       <CardIcon>
-        <StyledChill><img src={chillicon} style={{ marginTop: -4, width: "120px", height: "90px" }}/></StyledChill>
+        <StyledChill><img src={logo} style={{ marginTop: -4, width: "120px", height: "100px" }}/></StyledChill>
       </CardIcon>
       {!!text && <StyledText>{text}</StyledText>}
     </StyledLoader>
