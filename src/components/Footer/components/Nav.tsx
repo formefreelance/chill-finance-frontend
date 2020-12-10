@@ -6,13 +6,13 @@ const Nav: React.FC = () => {
     <StyledNav>
       <StyledLink
         target="_blank"
-        href="#"
+        href="https://etherscan.io/address/0x4ad97fd79f8a2ae0e5415821bc06781bf5a164e1#code"
       >
         MasterMew Contract
       </StyledLink>
       <StyledLink
         target="_blank"
-        href="#"
+        href="https://etherscan.io/address/0xddBDfb8FAc34863fd97e6ff52B95cF257C3c2721#code"
       >
         Uniswap CHILL-ETH
       </StyledLink>

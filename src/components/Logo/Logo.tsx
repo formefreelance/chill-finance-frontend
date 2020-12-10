@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import logo from '../../assets/img/chillicon.png'
+import logo from '../../assets/img/cat5.png'
 
 const Logo: React.FC = () => {
   return (
