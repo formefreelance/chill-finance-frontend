@@ -13,7 +13,10 @@ const Nav: React.FC = () => {
       </StyledLink>
       <StyledLink exact activeClassName="active" to="/nirvana">
         Nirvana
-      </StyledLink>
+      </StyledLink>   
+      <StyledAbsoluteLink target="_blank" href="https://chillswap.medium.com/chill-finance-aka-chillswap-2c2505be1727">
+          About
+      </StyledAbsoluteLink>
       {/* <StyledLink exact activeClassName="active" to="/staking">
         Staking
       </StyledLink>
