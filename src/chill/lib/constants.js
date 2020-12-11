@@ -61,7 +61,7 @@ export const contractAddresses = {
     1: '0x4ad97fd79F8a2aE0e5415821BC06781bF5a164e1',
   },
   weth: {
-    1: '0xd0A1E359811322d97991E03f863a0C30C2cF029C',
+    1: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
   }
 }
 
@@ -140,46 +140,46 @@ UNI-V2 LP Address on mainnet for reference
 
 // Mainnet
 export const supportedPools = [
-  // {
-  //   pid: 0,
-  //   lpAddresses: {
-  //     1: '0xBbB8eeA618861940FaDEf3071e79458d4c2B42e3',
-  //   },
-  //   tokenAddresses: {
-  //     1: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD',
-  //   },
-  //   name: 'DAI-ETH',
-  //   symbol: 'DAI-ETH UNI-V2 LP',
-  //   tokenSymbol: 'DAI',
-  //   iconSrc: cat4,
-  //   icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
-  // },
-  // {
-  //   pid: 1,
-  //   lpAddresses: {
-  //     1: '0x895304AC31f3fA5D8b215d7B04cC6C2D0677E0b0',
-  //   },
-  //   tokenAddresses: {
-  //     1: '0xC059Ab991c99D2c08A511F8e04EE5EA85a2e97bf',
-  //   },
-  //   name: 'CHILL-ETH',
-  //   symbol: 'CHILL-ETH UNI-V2 LP',
-  //   tokenSymbol: 'CHILL',
-  //   iconSrc: cat5,
-  //   icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
-  // },
-  // {
-  //   pid: 2,
-  //   lpAddresses: {
-  //     1: '0x3C30B799bB64485FDB52f249DA0e74F67f35b5E7',
-  //   },
-  //   tokenAddresses: {
-  //     1: '0xd3a691c852cdb01e281545a27064741f0b7f6825',
-  //   },
-  //   name: 'BTC-ETH',
-  //   symbol: 'BTC-ETH UNI-V2 LP',
-  //   tokenSymbol: 'BTC',
-  //   iconSrc: cat3,
-  //   icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
-  // },
+  {
+    pid: 0,
+    lpAddresses: {
+      1: '0xddBDfb8FAc34863fd97e6ff52B95cF257C3c2721',
+    },
+    tokenAddresses: {
+      1: '0xD6689f303fA491f1fBba919C1AFa619Bd8E595e3',
+    },
+    name: 'CHILL-ETH',
+    symbol: 'CHILL-ETH UNI-V2 LP',
+    tokenSymbol: 'CHILL',
+    iconSrc: cat4,
+    icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
+  },
+  {
+    pid: 1,
+    lpAddresses: {
+      1: '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852',
+    },
+    tokenAddresses: {
+      1: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
+    },
+    name: 'USDT-ETH',
+    symbol: 'USDT-ETH UNI-V2 LP',
+    tokenSymbol: 'USDT',
+    iconSrc: cat5,
+    icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
+  },
+  {
+    pid: 2,
+    lpAddresses: {
+      1: '0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11',
+    },
+    tokenAddresses: {
+      1: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+    },
+    name: 'DAI-ETH',
+    symbol: 'DAI-ETH UNI-V2 LP',
+    tokenSymbol: 'DAI',
+    iconSrc: cat3,
+    icon: <img src={cat3} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
+  },
 ]
