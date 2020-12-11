@@ -69,7 +69,7 @@ const FarmCards: React.FC = () => {
           ? chillPrice
               .times(CHILL_PER_BLOCK)
               .times(BLOCKS_PER_YEAR)
-              .times(100)
+              .times(stakedValue[i].poolWeight)
               .div(stakedValue[i].totalWethValue)
           : null,
         allocPoint: stakedValue[i]
