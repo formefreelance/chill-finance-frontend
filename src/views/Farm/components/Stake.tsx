@@ -197,6 +197,7 @@ const StyledLink = styled.a`
   &:hover {
     color: ${(props) => props.theme.color.grey[500]};
   }
+  font-size: 13px;
 `
 
 export default Stake

@@ -114,7 +114,7 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
             <Value value={getBalanceNumber(earnings)} />
             <Label text="CHILL Earned" />
           </StyledCardHeader>
-          <StyledCardHeader>
+          <StyledCardHeader2>
 
           {/* <StyledCardActions> */}
             <Button
@@ -127,10 +127,10 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
               }}
             />
           {/* </StyledCardActions> */}
-            <Spacer/>
+            <Spacer size="sm"/>
             <Label text="Time to complete this tax phase" />
-            <Label text={`${days.toString()} : ${hours.toString()} : ${minutes.toString()} : ${seconds.toString()} `} />
-          </StyledCardHeader>
+            <Label text={`${days.toString()} Days : ${hours.toString()} Hours : ${minutes.toString()} Minutes : ${seconds.toString()} Seconds`} />
+          </StyledCardHeader2>
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -142,6 +142,13 @@ const StyledCardHeader = styled.div`
   display: flex;
   flex-direction: column;
 `
+const StyledCardHeader2 = styled.div`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+`
+
 const StyledCardActions = styled.div`
   display: flex;
   justify-content: center;

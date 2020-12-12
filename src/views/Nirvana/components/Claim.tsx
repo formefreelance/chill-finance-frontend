@@ -101,7 +101,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
             <Value value={getBalanceNumber(rewardAmount)} />
             <Spacer/>
             <Label text="Time Until Session" />
-            <Label text={`${days.toString()} : ${hours.toString()} : ${minutes.toString()} : ${seconds.toString()} `} />
+            <Label text={`${days.toString()} Days : ${hours.toString()} Hours : ${minutes.toString()} Minutes : ${seconds.toString()} Seconds`} />
           </StyledCardHeader>
           <StyledCardActions>
             <Button
@@ -124,6 +124,7 @@ const StyledCardHeader = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
+  font-size: 11px;
 `
 const StyledCardActions = styled.div`
   display: flex;
