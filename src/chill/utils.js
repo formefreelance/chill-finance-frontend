@@ -15,7 +15,7 @@ const GAS_LIMIT = {
 
 export const getPhaseTimeAndBlocks = async (masterChefContract) => {
   try {
-    const phaseDetails  = await masterChefContract.methods
+    const phaseDetails = await masterChefContract.methods
       .getPhaseTimeAndBlocks()
       .call()
     return phaseDetails
@@ -26,14 +26,14 @@ export const getPhaseTimeAndBlocks = async (masterChefContract) => {
 
 export const getNirvanaStatus = async (pid, account, masterChefContract) => {
   try {
-    const userDetails  = await masterChefContract.methods
+    const userDetails = await masterChefContract.methods
       .userInfo(pid, account)
       .call()
-      console.log('userDetails===', userDetails.startedBlock)
-    const nirvanstatus  = await masterChefContract.methods
+    console.log('userDetails===', userDetails.startedBlock)
+    const nirvanstatus = await masterChefContract.methods
       .getNirvanaStatus(userDetails.startedBlock)
       .call()
-      console.log('nirvanstatus===', nirvanstatus)
+    console.log('nirvanstatus===', nirvanstatus)
     return nirvanstatus
   } catch {
     return new BigNumber(0)
@@ -67,33 +67,33 @@ export const getFarms = (chill) => {
   // console.log('pools===', chill.contracts.pools);
   return chill
     ? chill.contracts.pools.map(
-        ({
-          pid,
-          name,
-          symbol,
-          icon,
-          tokenAddress,
-          tokenSymbol,
-          tokenContract,
-          lpAddress,
-          lpContract,
-          iconSrc,
-        }) => ({
-          pid,
-          id: symbol,
-          name,
-          lpToken: symbol,
-          lpTokenAddress: lpAddress,
-          lpContract,
-          tokenAddress,
-          tokenSymbol,
-          tokenContract,
-          earnToken: 'chill',
-          earnTokenAddress: chill.contracts.chill.options.address,
-          icon,
-          iconSrc,
-        }),
-      )
+      ({
+        pid,
+        name,
+        symbol,
+        icon,
+        tokenAddress,
+        tokenSymbol,
+        tokenContract,
+        lpAddress,
+        lpContract,
+        iconSrc,
+      }) => ({
+        pid,
+        id: symbol,
+        name,
+        lpToken: symbol,
+        lpTokenAddress: lpAddress,
+        lpContract,
+        tokenAddress,
+        tokenSymbol,
+        tokenContract,
+        earnToken: 'chill',
+        earnTokenAddress: chill.contracts.chill.options.address,
+        icon,
+        iconSrc,
+      }),
+    )
     : []
 }
 
@@ -102,12 +102,18 @@ export const getAllocPoint = async (masterChefContract, pid) => {
   return new BigNumber(allocPoint)
 }
 
+export const getTotalPoolBalance = async (masterChefContract, pid) => {
+  const { totalPoolBalance } = await masterChefContract.methods.poolInfo(pid).call()
+  return new BigNumber(totalPoolBalance)
+}
+
+
 export const getPoolWeight = async (masterChefContract, pid) => {
   const { allocPoint } = await masterChefContract.methods.poolInfo(pid).call()
   const totalAllocPoint = await masterChefContract.methods
     .totalAllocPoint()
     .call()
-    console.log('totalAllocPoint: ', new BigNumber(allocPoint).div(new BigNumber(totalAllocPoint).toString()));
+  console.log('totalAllocPoint: ', new BigNumber(allocPoint).div(new BigNumber(totalAllocPoint).toString()));
   return new BigNumber(allocPoint).div(new BigNumber(totalAllocPoint))
 }
 
@@ -159,7 +165,7 @@ export const getTotalLPWethValue = async (
     .times(portionLp)
     .div(new BigNumber(10).pow(18))
 
-  const poolWeight =await getPoolWeight(masterChefContract, pid);
+  const poolWeight = await getPoolWeight(masterChefContract, pid);
   return {
     tokenAmount,
     wethAmount,
@@ -270,4 +276,22 @@ export const getDaiEthAirDropRewardAmount = (airdropDaiEthContract) => {
 
 export const getDaiEthAirDropTimeStamp = (airdropDaiEthContract) => {
   return airdropDaiEthContract.methods.timeStamp().call();
+}
+
+export const getToken0 = async (uniswapV2PairContract, account) => {
+  return uniswapV2PairContract.methods
+    .token0()
+    .call()
+}
+
+export const getReserves = async (uniswapV2PairContract, account) => {
+  return uniswapV2PairContract.methods
+    .getReserves()
+    .call()
+}
+
+export const getAmountOut = async (uniswapV2LibContract, amount, res0, res1) => {
+  return uniswapV2LibContract.methods
+    .getAmountOut(amount, res0, res1)
+    .call()
 }

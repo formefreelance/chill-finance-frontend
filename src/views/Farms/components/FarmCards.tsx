@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Countdown, { CountdownRenderProps } from 'react-countdown'
 import styled, { keyframes } from 'styled-components'
 import { useWallet } from 'use-wallet'
+import { provider } from 'web3-core'
 import Button from '../../../components/Button'
 import Card from '../../../components/Card'
 import CardContent from '../../../components/CardContent'
@@ -17,8 +18,10 @@ import useAllStakedValue, {
 import useFarms from '../../../hooks/useFarms'
 import useBlock from '../../../hooks/useBlock'
 import useChill from '../../../hooks/useChill'
-import { getEarned, getMasterChefContract, getPhaseTimeAndBlocks } from '../../../chill/utils'
+import { getEarned, getMasterChefContract, getPhaseTimeAndBlocks, getToken0, getReserves, getTotalPoolBalance, getAmountOut, getStaked } from '../../../chill/utils'
 import { bnToDec } from '../../../utils'
+import { getUniswapV2Library, getUniswapV2Pair } from "../../../utils/uniswap";
+import { getTotalSupply } from "../../../utils/erc20";
 
 interface FarmWithStakedValue extends Farm, StakedValue {
   apy: BigNumber,
@@ -34,6 +37,7 @@ const FarmCards: React.FC = () => {
   const block = useBlock()
   const stakedValue = useAllStakedValue()
   const chill = useChill();
+
 
   useEffect(() => {
     async function process() {
@@ -62,6 +66,7 @@ const FarmCards: React.FC = () => {
 
   const rows = farms.reduce<FarmWithStakedValue[][]>(
     (farmRows, farm, i) => {
+      console.log("Farm: ", farm)
       const farmWithStakedValue = {
         ...farm,
         ...stakedValue[i],
@@ -116,9 +121,14 @@ interface FarmCardProps {
 const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   const [startTime, setStartTime] = useState(0)
   const [harvestable, setHarvestable] = useState(0)
+  const [totalAmount, setTotalAmount] = useState('')
+  const [yourShare, setYourShare] = useState('')
   const { account } = useWallet()
   const { lpTokenAddress } = farm
+  console.log('lpTokenAddress: ', lpTokenAddress)
   const chill = useChill()
+  const { ethereum } = useWallet()
+  let uniswapV2PairContract;
 
   const renderer = (countdownProps: CountdownRenderProps) => {
     const { hours, minutes, seconds } = countdownProps
@@ -147,6 +157,153 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
     }
   }, [chill, lpTokenAddress, account, setHarvestable])
 
+  
+  useEffect(() => {
+    async function process() {
+      let totalAmt;
+      uniswapV2PairContract = await getUniswapV2Pair(ethereum as provider, lpTokenAddress);
+      const token0 = await getToken0(uniswapV2PairContract, account)
+      console.log("UniswapV2_token0: ", token0)
+      const reserves = await getReserves(uniswapV2PairContract, account)
+      console.log("UniswapV2_reserve0: ", reserves._reserve0)
+      const totalSupply = await getTotalSupply(ethereum as provider, lpTokenAddress)
+      console.log("UniswapV2_totalSupply: ", totalSupply)
+      const totalPoolBalance = await getTotalPoolBalance(getMasterChefContract(chill), farm.pid)
+      console.log("UniswapV2-totalPoolBalance: ", totalPoolBalance.toString())
+      
+      if(token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2') {
+        const tokenBalance = totalPoolBalance.multipliedBy(new BigNumber(reserves._reserve0)).div(new BigNumber(totalSupply))
+        console.log("UniswapV2_tokenBalance: ", tokenBalance.toString())
+        const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
+        const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
+        console.log("UniswapV2_token0: ", usdttoken0)
+        const usdtreserves = await getReserves(uniswapV2PairContract2, account)
+        console.log("UniswapV2_reserve0: ", usdtreserves._reserve0)
+        let stableamount;
+        let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
+        console.log("usdttoken0: ", usdttoken0)
+        if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
+          console.log("Sunny1", usdtreserves._reserve0, usdtreserves._reserve1, new BigNumber(10).pow(18).toString())
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
+          console.log("Sunny2")
+        } else {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
+        }
+        console.log("UniswapV2_stableAMount: ", stableamount.toString())
+        
+        totalAmt = new BigNumber(tokenBalance)
+                            .div(new BigNumber(10).pow(18))
+                            .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
+                            .multipliedBy(new BigNumber(2)).toFixed(0)
+        console.log("UniswapV2_TotalAmount: ", totalAmt)
+        setTotalAmount(totalAmt.toString())
+      } else {
+        const tokenBalance = totalPoolBalance.multipliedBy(new BigNumber(reserves._reserve1)).div(new BigNumber(totalSupply))
+        console.log("UniswapV2_tokenBalance: ", tokenBalance.toString())
+        const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
+        const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
+        console.log("UniswapV2_token0: ", usdttoken0)
+        const usdtreserves = await getReserves(uniswapV2PairContract2, account)
+        console.log("UniswapV2_reserve0: ", usdtreserves._reserve0)
+        let stableamount;
+        let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
+        console.log("usdttoken0: ", usdttoken0)
+        if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
+          console.log("Sunny1", usdtreserves._reserve0, usdtreserves._reserve1, new BigNumber(10).pow(18).toString())
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
+          console.log("Sunny2")
+        } else {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
+        }
+        console.log("UniswapV2_stableAMount: ", stableamount.toString())
+        
+        totalAmt = new BigNumber(tokenBalance)
+                            .div(new BigNumber(10).pow(18))
+                            .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
+                            .multipliedBy(new BigNumber(2)).toFixed(0)
+        console.log("UniswapV2_TotalAmount: ", totalAmt.toString())
+        setTotalAmount(totalAmt.toString())
+      }
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill]);
+
+  // User Share
+  useEffect(() => {
+    async function process() {
+      let yourShareInPool;
+      uniswapV2PairContract = await getUniswapV2Pair(ethereum as provider, lpTokenAddress);
+      const token0 = await getToken0(uniswapV2PairContract, account)
+      console.log("UniswapV2_token0: ", token0)
+      const reserves = await getReserves(uniswapV2PairContract, account)
+      console.log("UniswapV2_reserve0: ", reserves._reserve0)
+      const totalSupply = await getTotalSupply(ethereum as provider, lpTokenAddress)
+      console.log("UniswapV2_totalSupply: ", totalSupply)
+      const stakedBalance = await getStaked(getMasterChefContract(chill), farm.pid, account)
+      console.log("UniswapV2-stakedBalance: ", stakedBalance.toString())
+      
+      if(token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2') {
+        const tokenBalance = stakedBalance.multipliedBy(new BigNumber(reserves._reserve0)).div(new BigNumber(totalSupply))
+        console.log("UniswapV2_tokenBalance: ", tokenBalance.toString())
+        const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
+        const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
+        console.log("UniswapV2_token0: ", usdttoken0)
+        const usdtreserves = await getReserves(uniswapV2PairContract2, account)
+        console.log("UniswapV2_reserve0: ", usdtreserves._reserve0)
+        let stableamount;
+        let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
+        console.log("usdttoken0: ", usdttoken0)
+        if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
+          console.log("Sunny1", usdtreserves._reserve0, usdtreserves._reserve1, new BigNumber(10).pow(18).toString())
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
+          console.log("Sunny2")
+        } else {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
+        }
+        console.log("UniswapV2_stableAMount: ", stableamount.toString())
+        
+        yourShareInPool = new BigNumber(tokenBalance)
+                            .div(new BigNumber(10).pow(18))
+                            .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
+                            .multipliedBy(new BigNumber(2)).toFixed(0)
+        console.log("UniswapV2_TotalAmount: ", yourShareInPool)
+        setYourShare(yourShareInPool.toString())
+      } else {
+        const tokenBalance = stakedBalance.multipliedBy(new BigNumber(reserves._reserve1)).div(new BigNumber(totalSupply))
+        console.log("UniswapV2_tokenBalance: ", tokenBalance.toString())
+        const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
+        const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
+        console.log("UniswapV2_token0: ", usdttoken0)
+        const usdtreserves = await getReserves(uniswapV2PairContract2, account)
+        console.log("UniswapV2_reserve0: ", usdtreserves._reserve0)
+        let stableamount;
+        let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
+        console.log("usdttoken0: ", usdttoken0)
+        if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
+          console.log("Sunny1", usdtreserves._reserve0, usdtreserves._reserve1, new BigNumber(10).pow(18).toString())
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
+          console.log("Sunny2")
+        } else {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
+        }
+        console.log("UniswapV2_stableAMount: ", stableamount.toString())
+        
+        yourShareInPool = new BigNumber(tokenBalance)
+                            .div(new BigNumber(10).pow(18))
+                            .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
+                            .multipliedBy(new BigNumber(2)).toFixed(0)
+        console.log("UniswapV2_TotalAmount: ", yourShareInPool.toString())
+        setYourShare(yourShareInPool.toString())
+      }
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill]);
+
+
   const poolActive = true // startTime * 1000 - Date.now() <= 0
 
   return (
@@ -159,7 +316,10 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
           <Spacer/>
             <CardIcon>{farm.icon}</CardIcon>
             <StyledTitle>{farm.name}</StyledTitle>
+            {/* <StyledTitle>{totalAmount}</StyledTitle> */}
             <StyledDetails>
+              <StyledDetail>Total Pool Balance: ${totalAmount ? totalAmount : 0}</StyledDetail>
+              <StyledDetail>Your Share: ${yourShare ? yourShare : 0}</StyledDetail>
               <StyledDetail>Deposit {farm.lpToken.toUpperCase()}</StyledDetail>
               <StyledDetail>Earn {farm.earnToken.toUpperCase()}</StyledDetail>
             </StyledDetails>
