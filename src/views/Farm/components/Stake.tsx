@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import React, { useCallback, useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 import { useWallet } from 'use-wallet'
 import styled from 'styled-components'
 import { Contract } from 'web3-eth-contract'
@@ -32,9 +33,10 @@ interface StakeProps {
   pid: number
   tokenName: string
   icon: string
+  tokenAddress: string
 }
 
-const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon }) => {
+const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon, tokenAddress }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
   const [nirvana, setNirvana] = useState<BigNumber>()
   const [nirvanaTax, setNirvanaTax] = useState<BigNumber>()
@@ -44,6 +46,7 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon }) => {
   const { onApprove } = useApprove(lpContract)
 
   const tokenBalance = useTokenBalance(lpContract.options.address)
+  console.log("lpContractsss: ", tokenAddress)
   const stakedBalance = useStakedBalance(pid)
 
   const { onStake } = useStake(pid)
@@ -148,6 +151,13 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon }) => {
               </>
             )}
           </StyledCardActions>
+          <Spacer/>
+          <StyledLink
+            target="_blank"
+            href={`https://app.uniswap.org/#/add/ETH/${tokenAddress}`}
+          >
+            <u><Label text={`Get ${tokenName} Tokens`} /></u>
+          </StyledLink>
         </StyledCardContentInner>
       </CardContent>
     </Card>
@@ -177,6 +187,16 @@ const StyledCardContentInner = styled.div`
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
+`
+
+const StyledLink = styled.a`
+  color: ${(props) => props.theme.color.grey[400]};
+  padding-left: ${(props) => props.theme.spacing[3]}px;
+  padding-right: ${(props) => props.theme.spacing[3]}px;
+  text-decoration: none;
+  &:hover {
+    color: ${(props) => props.theme.color.grey[500]};
+  }
 `
 
 export default Stake

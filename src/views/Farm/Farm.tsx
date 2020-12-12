@@ -75,6 +75,7 @@ const Farm: React.FC = () => {
               pid={pid}
               tokenName={lpToken.toUpperCase()}
               icon={iconSrc}
+              tokenAddress={tokenAddress}
             />
           </StyledCardWrapper>
         </StyledCardsWrapper>
