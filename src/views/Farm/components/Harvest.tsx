@@ -21,12 +21,11 @@ interface HarvestProps {
   pid: number
 }
 
-let restictFlag: Number = 0
-
 const Harvest: React.FC<HarvestProps> = ({ pid }) => {
   const earnings = useEarnings(pid)
   const [pendingTx, setPendingTx] = useState(false)
   const { onReward } = useReward(pid)
+  let restictFlag: Number = 0
 
   const { account } = useWallet()
   const chill = useChill();
