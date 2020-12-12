@@ -40,6 +40,17 @@ export const getNirvanaStatus = async (pid, account, masterChefContract) => {
   }
 }
 
+export const getUserStartedBlock = async (pid, account, masterChefContract) => {
+  try {
+    const { startedBlock } = await masterChefContract.methods
+      .userInfo(pid, account)
+      .call()
+    return startedBlock
+  } catch {
+    return new BigNumber(0)
+  }
+}
+
 export const getMasterChefAddress = (chill) => {
   return chill && chill.masterChefAddress
 }

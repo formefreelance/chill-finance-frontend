@@ -42,7 +42,7 @@ const useTimer = (pid: number) => {
   useEffect(() => {
     async function timer() {
       const x = setInterval(() => {
-        if(timeStamp>0) {
+        if(timeStamp > 0) {
         const now = new Date().getTime();
         const distance = (timeStamp*1000) - now;
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));

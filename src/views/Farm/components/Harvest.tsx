@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from '../../../components/Button'
 import Card from '../../../components/Card'
@@ -8,17 +8,102 @@ import Label from '../../../components/Label'
 import Value from '../../../components/Value'
 import useEarnings from '../../../hooks/useEarnings'
 import useReward from '../../../hooks/useReward'
+import useChill from '../../../hooks/useChill'
+import { useWallet } from 'use-wallet'
+import useBlock from '../../../hooks/useBlock'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 import chillicon from "../../../assets/img/chillicon.png";
+import { getUserStartedBlock, getMasterChefContract } from "../../../chill/utils";
+import BigNumber from 'bignumber.js'
+import Spacer from '../../../components/Spacer'
 
 interface HarvestProps {
   pid: number
 }
 
+let restictFlag: Number = 0
+
 const Harvest: React.FC<HarvestProps> = ({ pid }) => {
   const earnings = useEarnings(pid)
   const [pendingTx, setPendingTx] = useState(false)
   const { onReward } = useReward(pid)
+
+  const { account } = useWallet()
+  const chill = useChill();
+  const block = useBlock()
+  const [timeStamp, setTimeStamp] = useState(Number)
+  const [days, setDays] = useState(Number)
+  const [hours, setHours] = useState(Number)
+  const [minutes, setMinutes] = useState(Number)
+  const [seconds, setSeconds] = useState(Number)
+  
+  useEffect(() => {
+    async function process() {
+      if(block && restictFlag == 0) {
+        const startedBlock = await getUserStartedBlock(pid, account, getMasterChefContract(chill))
+        const time = Math.floor(Date.now() / 1000)
+        console.log('startedBlock: ', time)
+        const diffBlock = new BigNumber(block).minus(new BigNumber(startedBlock))
+        console.log('diffBlock: ', diffBlock.toString())
+
+        let totalBlocksRest;
+        let timeStamp;
+        if (diffBlock.lt(new BigNumber(2201))) {
+          totalBlocksRest = new BigNumber(2201).minus(diffBlock)
+        } else if (diffBlock.lt(new BigNumber(4402))) {
+          totalBlocksRest = new BigNumber(4402).minus(diffBlock)
+        } else if (diffBlock.lt(new BigNumber(6603))) {
+          totalBlocksRest = new BigNumber(6603).minus(diffBlock)
+        } else if (diffBlock.lt(new BigNumber(8804))) {
+          totalBlocksRest = new BigNumber(8804).minus(diffBlock)
+        } else if (diffBlock.lt(new BigNumber(11005))) {
+          totalBlocksRest = new BigNumber(11005).minus(diffBlock)
+        } else {
+          setTimeStamp(0);
+        }
+        timeStamp = new BigNumber(totalBlocksRest).multipliedBy(new BigNumber(28800)).div(new BigNumber(2201))
+        const totalTimeStamp = new BigNumber(timeStamp).plus(new BigNumber(time))
+        setTimeStamp(totalTimeStamp.toNumber());
+        restictFlag = 1
+      } else {
+        console.log('startedBlock: ', "NoTime")
+      }
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill, block]);
+  
+  useEffect(() => {
+    async function timer() {
+      const x = setInterval(() => {
+        if(timeStamp > 0) {
+        const now = new Date().getTime();
+        const distance = (timeStamp*1000) - now;
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        setDays(days)
+        setHours(hours)
+        setMinutes(minutes)
+        setSeconds(seconds)
+          if (distance < 0) {
+            setDays(0)
+            setHours(0)
+            setMinutes(0)
+            setSeconds(0)
+          }
+        }
+      }, 1000);
+    }
+    if (chill && account) {
+      timer()
+    }
+  }, [chill, timeStamp]);
+  
+
+
 
   return (
     <Card>
@@ -29,7 +114,9 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
             <Value value={getBalanceNumber(earnings)} />
             <Label text="CHILL Earned" />
           </StyledCardHeader>
-          <StyledCardActions>
+          <StyledCardHeader>
+
+          {/* <StyledCardActions> */}
             <Button
               disabled={!earnings.toNumber() || pendingTx}
               text={pendingTx ? 'Collecting CHILL' : 'Harvest'}
@@ -39,7 +126,11 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
                 setPendingTx(false)
               }}
             />
-          </StyledCardActions>
+          {/* </StyledCardActions> */}
+            <Spacer/>
+            <Label text="Time to complete this tax phase" />
+            <Label text={`${days.toString()} : ${hours.toString()} : ${minutes.toString()} : ${seconds.toString()} `} />
+          </StyledCardHeader>
         </StyledCardContentInner>
       </CardContent>
     </Card>
