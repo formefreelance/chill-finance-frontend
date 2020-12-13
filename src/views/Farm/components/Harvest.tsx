@@ -21,11 +21,12 @@ interface HarvestProps {
   pid: number
 }
 
+let interval;
+
 const Harvest: React.FC<HarvestProps> = ({ pid }) => {
   const earnings = useEarnings(pid)
   const [pendingTx, setPendingTx] = useState(false)
   const { onReward } = useReward(pid)
-  let restictFlag: Number = 0
 
   const { account } = useWallet()
   const chill = useChill();
@@ -38,7 +39,7 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
   
   useEffect(() => {
     async function process() {
-      if(block && restictFlag == 0) {
+      if(block && timeStamp == 0) {
         const startedBlock = await getUserStartedBlock(pid, account, getMasterChefContract(chill))
         const time = Math.floor(Date.now() / 1000)
         console.log('startedBlock: ', time)
@@ -63,7 +64,6 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
         timeStamp = new BigNumber(totalBlocksRest).multipliedBy(new BigNumber(28800)).div(new BigNumber(2201))
         const totalTimeStamp = new BigNumber(timeStamp).plus(new BigNumber(time))
         setTimeStamp(totalTimeStamp.toNumber());
-        restictFlag = 1
       } else {
         console.log('startedBlock: ', "NoTime")
       }
@@ -75,7 +75,7 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
   
   useEffect(() => {
     async function timer() {
-      const x = setInterval(() => {
+      interval = setInterval(() => {
         if(timeStamp > 0) {
         const now = new Date().getTime();
         const distance = (timeStamp*1000) - now;
@@ -97,13 +97,11 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
       }, 1000);
     }
     if (chill && account) {
-      timer()
+        clearInterval(interval)
+        timer()
     }
   }, [chill, timeStamp]);
   
-
-
-
   return (
     <Card>
       <CardContent>
