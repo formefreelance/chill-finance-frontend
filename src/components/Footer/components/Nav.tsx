@@ -16,9 +16,6 @@ const Nav: React.FC = () => {
       >
         Uniswap CHILL-ETH
       </StyledLink>
-      {/* <StyledLink target="_blank" href="#">
-        Discord
-      </StyledLink> */}
       <StyledLink target="_blank" href="https://chillswap.medium.com/chill-finance-aka-chillswap-2c2505be1727">
         Medium
       </StyledLink>

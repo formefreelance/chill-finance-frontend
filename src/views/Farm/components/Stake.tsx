@@ -121,7 +121,6 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon, tokenAd
       <CardContent>
         <StyledCardContentInner>
           <StyledCardHeader>
-          {/* <Sticker>{`${isNirvana ? 'Nirvana' : Number(nirvana) === 50 ? 'Nirvana' : nirvana }`}</Sticker> */}
           <Spacer/>
             <CardIcon>‍<img src={icon} style={{ marginTop: -4, width: "120px", height: "120px" }} /></CardIcon>
             {console.log('getBalanceNumber(stakedBalance)===', getBalanceNumber(stakedBalance))}

@@ -12,7 +12,6 @@ import PageHeader from '../../components/PageHeader'
 import WalletProviderModal from '../../components/WalletProviderModal'
 
 import useModal from '../../hooks/useModal'
-
 import useChill from '../../hooks/useChill'
 import useFarm from '../../hooks/useFarm'
 import useRedeem from '../../hooks/useRedeem'

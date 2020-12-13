@@ -16,7 +16,6 @@ import Home from './views/Home'
 import Stake from './views/Stake'
 import Nirvana from './views/Nirvana'
 
-
 const App: React.FC = () => {
   const [mobileMenu, setMobileMenu] = useState(false)
 
@@ -58,7 +57,6 @@ const Providers: React.FC = ({ children }) => {
         connectors={{
           walletconnect: { 
             rpcUrl: 'https://mainnet.infura.io/v3/37bd907f93a146679960d54e729cd51a'
-            // rpcUrl: 'https://mainnet.eth.aragon.network/'
           },
         }}
       >

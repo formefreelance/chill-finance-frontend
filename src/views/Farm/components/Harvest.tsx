@@ -112,7 +112,6 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
             <Label text="CHILL Earned" />
           </StyledCardHeader>
           <StyledCardHeader2>
-
           {/* <StyledCardActions> */}
             <Button
               disabled={!earnings.toNumber() || pendingTx}

@@ -168,7 +168,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
       const totalPoolBalance = await getTotalPoolBalance(getMasterChefContract(chill), farm.pid)
       console.log("UniswapV2-totalPoolBalance: ", totalPoolBalance.toString())
       
-      // Toatl pool share
+      // Toatl pool share in Dollar
       if(token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2') {
         const tokenBalance = totalPoolBalance.multipliedBy(new BigNumber(reserves._reserve0)).div(new BigNumber(totalSupply))
         const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
@@ -211,7 +211,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
     }
   }, [chill]);
 
-  // User Share
+  // User Share in Dollar
   useEffect(() => {
     async function process() {
       let yourShareInPool;

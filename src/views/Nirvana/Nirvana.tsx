@@ -1,18 +1,13 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import { useWallet } from 'use-wallet'
-
 import logo from '../../assets/img/cat5.png'
-
 import Button from '../../components/Button'
 import Page from '../../components/Page'
 import PageHeader from '../../components/PageHeader'
 import WalletProviderModal from '../../components/WalletProviderModal'
-
 import useModal from '../../hooks/useModal'
-
 import Farm from '../Farm'
-
 import NirvanaCards from './components/NirvanaCards'
 
 const Farms: React.FC = () => {
