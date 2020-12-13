@@ -130,7 +130,7 @@ const Balances: React.FC = () => {
         </CardContent>
         <Footnote>
           New rewards per block
-          <FootnoteValue>{phaseBlocks/1e18} CHILL</FootnoteValue>
+          <FootnoteValue>{phaseBlocks ? phaseBlocks/1e18 : '0'} CHILL</FootnoteValue>
         </Footnote>
       </Card>
     </StyledWrapper>
