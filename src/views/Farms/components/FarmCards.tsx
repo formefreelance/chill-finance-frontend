@@ -18,11 +18,14 @@ import useAllStakedValue, {
 import useFarms from '../../../hooks/useFarms'
 import useBlock from '../../../hooks/useBlock'
 import useChill from '../../../hooks/useChill'
-import { getEarned, getMasterChefContract, getPhaseTimeAndBlocks, getToken0, getReserves, getTotalPoolBalance, getAmountOut, getStaked } from '../../../chill/utils'
+import useStakedBalance from '../../../hooks/useStakedBalance'
+import { getEarned, getMasterChefContract, getNirvanaStatus, getPhaseTimeAndBlocks, getToken0, getReserves, getTotalPoolBalance, getAmountOut, getStaked } from '../../../chill/utils'
 import { bnToDec } from '../../../utils'
 import { getUniswapV2Library, getUniswapV2Pair } from "../../../utils/uniswap";
 import { getTotalSupply } from "../../../utils/erc20";
-
+import { getBalanceNumber } from '../../../utils/formatBalance'
+import Label from '../../../components/Label'
+import Value from '../../../components/Value'
 interface FarmWithStakedValue extends Farm, StakedValue {
   apy: BigNumber,
   allocPoint: BigNumber
@@ -123,7 +126,11 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
   const [harvestable, setHarvestable] = useState(0)
   const [totalAmount, setTotalAmount] = useState('')
   const [yourShare, setYourShare] = useState('')
+  const [nirvana, setNirvana] = useState<BigNumber>()
+  const [nirvanaTax, setNirvanaTax] = useState<BigNumber>()
+  const [isNirvana, setIsNirvavna] = useState(false)
   const { account } = useWallet()
+  const stakedBalance = useStakedBalance(farm.pid)
   const { lpTokenAddress } = farm
   console.log('lpTokenAddress: ', lpTokenAddress)
   const chill = useChill()
@@ -157,6 +164,38 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
     }
   }, [chill, lpTokenAddress, account, setHarvestable])
 
+  
+  useEffect(() => {
+    async function process() {
+      const taxArray: number[] = [50, 40, 30, 20, 10, 0];
+      const nirvanaRank = await getNirvanaStatus(farm.pid, account, getMasterChefContract(chill))
+      if(getBalanceNumber(stakedBalance) > 0) {
+        if(nirvanaRank == 50) {
+          setIsNirvavna(true)
+        }
+        const multiplier = new BigNumber(nirvanaRank).div(10)
+        setNirvana(multiplier)
+        if (nirvanaRank == 0) {
+          setNirvanaTax(new BigNumber(taxArray[0]))
+        } else if (nirvanaRank == 10) {
+          setNirvanaTax(new BigNumber(taxArray[1]))
+        } else if (nirvanaRank == 20) {
+          setNirvanaTax(new BigNumber(taxArray[2]))
+        } else if (nirvanaRank == 30) {
+          setNirvanaTax(new BigNumber(taxArray[3]))
+        } else if (nirvanaRank == 40) {
+          setNirvanaTax(new BigNumber(taxArray[4]))
+        } else {
+          setNirvanaTax(new BigNumber(0))
+        }
+      } else {
+        setNirvanaTax(new BigNumber(0))
+      }
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill, setNirvana, getBalanceNumber(stakedBalance)]);
   
   useEffect(() => {
     async function process() {
@@ -270,7 +309,14 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
       <Card>
         <CardContent>
           <StyledContent>
+          <StyledCardActions>
           <Sticker>{farm.allocPoint ? `${farm.allocPoint}x` : '0x'}</Sticker>
+          <StyledActionSpacer />
+          { isNirvana ? 
+            <StyledDetail2>{`Congrats Nirvana`}</StyledDetail2> : 
+            <StyledDetail3>{`Fight For Nirvana`}</StyledDetail3>
+          }
+          </StyledCardActions>
           <Spacer/>
             <CardIcon>{farm.icon}</CardIcon>
             <StyledTitle>{farm.name}</StyledTitle>
@@ -324,6 +370,18 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
     </StyledCardWrapper>
   )
 }
+
+
+const StyledCardActions = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`
+
+const StyledActionSpacer = styled.div`
+  height: ${(props) => props.theme.spacing[4]}px;
+  width: ${(props) => props.theme.spacing[4]}px;
+`
 
 const RainbowLight = keyframes`
   
@@ -422,6 +480,47 @@ const StyledDetails = styled.div`
 
 const StyledDetail = styled.div`
   color: ${(props) => props.theme.color.grey[500]};
+`
+
+const StyledDetail2 = styled.div`
+  background: linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 1) 0%,
+    rgba(28, 127, 238, 1) 60%,
+    rgba(95, 21, 242, 1) 70%,
+    rgba(186, 12, 248, 1) 80%,
+    rgba(251, 7, 217, 1) 90%,
+    rgba(255, 0, 0, 1) 100%
+  );
+  background-size: 300% 300%;
+  filter: blur(0.1px);
+
+  color: ${(props) => props.theme.color.grey[500]};  
+  background-color: ${props => props.theme.color.grey[200]};
+  height: 40px;
+  width: 160px;
+  border-radius: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  animation: ${RainbowLight} 2s linear infinite;
+  box-shadow: inset 4px 4px 8px ${props => props.theme.color.grey[300]},
+  inset -6px -6px 12px ${props => props.theme.color.grey[100]};
+  margin-top: 8px;
+`
+
+const StyledDetail3 = styled.div`
+  color: ${(props) => props.theme.color.grey[500]};  
+  background-color: ${props => props.theme.color.grey[200]};
+  height: 40px;
+  width: 160px;
+  border-radius: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  box-shadow: inset 4px 4px 8px ${props => props.theme.color.grey[300]},
+  inset -6px -6px 12px ${props => props.theme.color.grey[100]};
+  margin-top: 8px;
 `
 
 const StyledInsight = styled.div`
