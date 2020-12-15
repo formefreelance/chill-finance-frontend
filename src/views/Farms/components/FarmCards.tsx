@@ -313,8 +313,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
           <Sticker>{farm.allocPoint ? `${farm.allocPoint}x` : '0x'}</Sticker>
           <StyledActionSpacer />
           { isNirvana ? 
-            <StyledDetail2>{`Congrats Nirvana`}</StyledDetail2> : 
-            <StyledDetail3>{`Fight For Nirvana`}</StyledDetail3>
+            <StyledDetail2>{`Nirvana! Congrats`}</StyledDetail2> : 
+            <StyledDetail3>{`Chilling`}</StyledDetail3>
           }
           </StyledCardActions>
           <Spacer/>
