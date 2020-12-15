@@ -314,7 +314,7 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
           <StyledActionSpacer />
           { isNirvana ? 
             <StyledDetail2>{`Nirvana! Congrats`}</StyledDetail2> : 
-            <StyledDetail3>{`Chilling`}</StyledDetail3>
+            <StyledDetail3>{`Chilling...`}</StyledDetail3>
           }
           </StyledCardActions>
           <Spacer/>
