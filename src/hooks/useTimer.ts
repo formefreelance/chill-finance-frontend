@@ -27,26 +27,25 @@ const useTimer = (pid: number) => {
       let airdropContract;
       
       if (pid == 0) {
-        console.log("AirDrop:")
         const networkId = 1;
         // airdropContract = getDaiEthAirDropContract(chill);
         airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
         const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.chillEth[networkId]);
         setTotalBalanceReward(new BigNumber(totalBalanceRewards))
+      } else if (pid == 1) {
+        const networkId = 1;
+        // airdropContract = getDaiEthAirDropContract(chill);
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.usdtEth[networkId]);
+        const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.usdtEth[networkId]);
+        console.log('totalBalanceRewards:', totalBalanceRewards, pid);
+        setTotalBalanceReward(new BigNumber(totalBalanceRewards))
+      } else if (pid == 2) {
+        const networkId = 1;
+        // airdropContract = getDaiEthAirDropContract(chill);
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
+        const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.daiEth[networkId]);
+        setTotalBalanceReward(new BigNumber(totalBalanceRewards))
       } 
-      console.log("AirDrop2:")
-
-      // else if (pid == 1) {
-      //   const networkId = 1;
-      //   airdropContract = getDaiEthAirDropContract(chill);
-      //   const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.daiEth[networkId]);
-      //   setTotalBalanceReward(new BigNumber(totalBalanceRewards))
-      // } else if (pid == 2) {
-      //   const networkId = 1;
-      //   airdropContract = getDaiEthAirDropContract(chill);
-      //   const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.daiEth[networkId]);
-      //   setTotalBalanceReward(new BigNumber(totalBalanceRewards))
-      // } 
       if(airdropContract) {
         getDaiEthAirDropRewardAmount(airdropContract).then((reward) => {
           setReward(new BigNumber(reward));

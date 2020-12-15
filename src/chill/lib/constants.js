@@ -80,10 +80,10 @@ export const contractAddresses = {
 export const airDropAddresses = {
   chillEth: {
     1: '0xF6F13e0a724b48246aC575635D1198A1148A25f6',
-  }, daiEth: {
-    1: '0xF6F13e0a724b48246aC575635D1198A1148A25f6',
   }, usdtEth: {
-    1: '0xF6F13e0a724b48246aC575635D1198A1148A25f6',
+    1: '0xFeCFc33DFD0B3d3AF1E7B98D70AF68941EbccD3b',
+  }, daiEth: {
+    1: '0x7F80d7f7F27E033d9ce1BE5b012520fE91486E6E',
   }
 }
 

@@ -31,9 +31,9 @@ const useAirdrop = (pid: number) => {
     if (pid == 0) {
       airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
     } else if (pid == 1) {
-      airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
-    } else if (pid == 2) {
       airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.usdtEth[networkId]);
+    } else if (pid == 2) {
+      airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
     } 
 
     if (airdropContract) { 
