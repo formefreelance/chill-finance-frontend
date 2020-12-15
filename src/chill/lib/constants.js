@@ -65,9 +65,25 @@ export const contractAddresses = {
   }
 }
 
+// Kovan
+// export const airDropAddresses = {
+//   daiEth: {
+//     42: '0x19891522E6CC5644C4DD4c238e89Afc974Ec31d8',
+//   }, chillEth: {
+//     42: '0x19891522E6CC5644C4DD4c238e89Afc974Ec31d8',
+//   }, usdtEth: {
+//     42: '0x19891522E6CC5644C4DD4c238e89Afc974Ec31d8',
+//   }
+// }
+
+// Mainnet
 export const airDropAddresses = {
-  daiEth: {
-    1: '0xE9b2927B071FC8dFf473282dD0aea176b9DE0DBa',
+  chillEth: {
+    1: '0xF6F13e0a724b48246aC575635D1198A1148A25f6',
+  }, daiEth: {
+    1: '0xF6F13e0a724b48246aC575635D1198A1148A25f6',
+  }, usdtEth: {
+    1: '0xF6F13e0a724b48246aC575635D1198A1148A25f6',
   }
 }
 

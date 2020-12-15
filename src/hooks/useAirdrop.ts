@@ -17,9 +17,25 @@ const useAirdrop = (pid: number) => {
   const networkId = 1;
 
   const handleAirDrop = useCallback(async () => {
+
+    // Kovan
+    // if (pid == 0) {
+    //   airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
+    // } else if (pid == 1) {
+    //   airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
+    // } else if (pid == 2) {
+    //   airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
+    // } 
+
+    // Mainnet
     if (pid == 0) {
+      airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
+    } else if (pid == 1) {
       airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
-    }
+    } else if (pid == 2) {
+      airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.usdtEth[networkId]);
+    } 
+
     if (airdropContract) { 
         const txHash = await claimNirvanaIncentive(airdropContract, pid, account)
         console.log(txHash)

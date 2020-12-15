@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react'
 
 import useChill from './useChill'
 
+import { useWallet } from 'use-wallet'
+import { provider } from 'web3-core'
 import { getDaiEthAirDropRewardAmount, getDaiEthAirDropContract, getChillBalanceOf, getDaiEthAirDropTimeStamp } from '../chill/utils'
 import { airDropAddresses } from '../chill/lib/constants'
+import { getAirDropContract } from '../utils/airdrop'
 import BigNumber from 'bignumber.js'
 
 const useTimer = (pid: number) => {
   const chill = useChill()
+  const { ethereum } = useWallet()
+
   const [rewardAmount, setReward] = useState(new BigNumber(0))
   const [totalBalanceReward, setTotalBalanceReward] = useState(new BigNumber(0))
   const [timeStamp, setTimeStamp] = useState(Number)
@@ -17,14 +22,31 @@ const useTimer = (pid: number) => {
   const [seconds, setSeconds] = useState(Number)
 
   useEffect(() => {
+    
     async function getReward() {
       let airdropContract;
+      
       if (pid == 0) {
+        console.log("AirDrop:")
         const networkId = 1;
-        airdropContract = getDaiEthAirDropContract(chill);
-        const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.daiEth[networkId]);
+        // airdropContract = getDaiEthAirDropContract(chill);
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
+        const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.chillEth[networkId]);
         setTotalBalanceReward(new BigNumber(totalBalanceRewards))
-      }
+      } 
+      console.log("AirDrop2:")
+
+      // else if (pid == 1) {
+      //   const networkId = 1;
+      //   airdropContract = getDaiEthAirDropContract(chill);
+      //   const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.daiEth[networkId]);
+      //   setTotalBalanceReward(new BigNumber(totalBalanceRewards))
+      // } else if (pid == 2) {
+      //   const networkId = 1;
+      //   airdropContract = getDaiEthAirDropContract(chill);
+      //   const totalBalanceRewards = await getChillBalanceOf(chill, airDropAddresses.daiEth[networkId]);
+      //   setTotalBalanceReward(new BigNumber(totalBalanceRewards))
+      // } 
       if(airdropContract) {
         getDaiEthAirDropRewardAmount(airdropContract).then((reward) => {
           setReward(new BigNumber(reward));

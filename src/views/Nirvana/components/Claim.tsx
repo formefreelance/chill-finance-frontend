@@ -27,6 +27,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
       <CardContent>
         <StyledCardContentInner>
           <StyledCardHeader>
+            
             <CardIcon>{<img src={iconSrc} style={{ marginTop: -4, width: "120px", height: "120px" }} />}</CardIcon>
             <StyledTitle>{name}</StyledTitle>
             <Label text="Total Reward Pool" />
@@ -39,15 +40,16 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
             <Label text={`${days.toString()} Days : ${hours.toString()} Hours : ${minutes.toString()} Minutes : ${seconds.toString()} Seconds`} />
           </StyledCardHeader>
           <StyledCardActions>
+            {name == "CHILL-ETH" ? 
             <Button
-              disabled={rewardAmount.gt(0) ? false : true}
+              // disabled={rewardAmount.gt(0) ? false : true}
               text={pendingTx ? 'Collecting Reward' : 'Claim Reward'}
               onClick={async () => {
                 setPendingTx(true)
                 await onAirdrop()
                 setPendingTx(false)
               }}
-            />
+            /> : <Value value="Coming Soon"/> }
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
