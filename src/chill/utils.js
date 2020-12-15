@@ -49,6 +49,17 @@ export const getUserStartedBlock = async (pid, account, masterChefContract) => {
   }
 }
 
+export const getUserAmount = async (pid, account, masterChefContract) => {
+  try {
+    const { amount } = await masterChefContract.methods
+      .userInfo(pid, account)
+      .call()
+    return amount
+  } catch {
+    return new BigNumber(0)
+  }
+}
+
 export const getMasterChefAddress = (chill) => {
   return chill && chill.masterChefAddress
 }

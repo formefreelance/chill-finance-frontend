@@ -13,7 +13,7 @@ import useTimer from '../../../hooks/useTimer'
 import useChill from '../../../hooks/useChill'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 import Spacer from '../../../components/Spacer'
-import { getNirvanaStatus, getMasterChefContract, getDaiEthAirDropScheduleAttend, getNirvana } from '../../../chill/utils'
+import { getNirvanaStatus, getMasterChefContract, getDaiEthAirDropScheduleAttend, getNirvana, getUserAmount } from '../../../chill/utils'
 import { airDropAddresses } from '../../../chill/lib/constants'
 import { getAirDropContract } from '../../../utils/airdrop'
 interface ClaimProps {
@@ -29,6 +29,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
   const [pendingTx, setPendingTx] = useState(false)
   const [isNirvana, setIsNirvavna] = useState(false)
   const [isScheduleAttend, setIsScheduleAttend] = useState(false)
+  const [isAmount, setIsUserHasAmount] = useState(false)
   const { onAirdrop } = useAirdrop(pid)
   const { totalBalanceReward, rewardAmount, days, hours, minutes, seconds } = useTimer(pid)
 
@@ -40,6 +41,11 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
       console.log('pid:-- ', pid)
       const networkId = 1;
       const nirvanaRank = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
+      const userAmount = await getUserAmount(pid, account, getMasterChefContract(chill))
+      if(userAmount > 0) {
+        console.log('userAmount', pid, userAmount)
+        setIsUserHasAmount(true)
+      }
       if (pid == 0) {
         airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
       } else if (pid == 1) {
@@ -48,14 +54,14 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
         airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.usdtEth[networkId]);
       }
       const scheduleAttend = await getDaiEthAirDropScheduleAttend(airdropContract, account)
-      const isNirva = await getNirvana(airdropContract, pid)
+      // const isNirva = await getNirvana(airdropContract, pid)
 
       if(scheduleAttend == true) {
         console.log('scheduleAttend: ', pid, scheduleAttend)
         setIsScheduleAttend(true)
       }
-        if(isNirva == 50) {
-          console.log('nirvanaRank:-- ', pid, isNirva)
+        if(nirvanaRank == 50) {
+          console.log('nirvanaRank:-- ', pid, nirvanaRank)
           setIsNirvavna(true)
         }
     }
@@ -85,7 +91,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
           <StyledCardActions>
             {console.log('isNirvana:++', isNirvana)}
             
-            { name== "CHILL-ETH" && isNirvana && !isScheduleAttend ? 
+            { name== "CHILL-ETH" && isNirvana && !isScheduleAttend && isAmount ? 
                   <Button
                   // disabled={rewardAmount.gt(0) ? false : true}
                   disabled={false}
