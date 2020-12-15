@@ -29,11 +29,9 @@ export const getNirvanaStatus = async (pid, account, masterChefContract) => {
     const userDetails = await masterChefContract.methods
       .userInfo(pid, account)
       .call()
-    console.log('userDetails===', userDetails.startedBlock)
     const nirvanstatus = await masterChefContract.methods
       .getNirvanaStatus(userDetails.startedBlock)
       .call()
-    console.log('nirvanstatus===', nirvanstatus)
     return nirvanstatus
   } catch {
     return new BigNumber(0)
@@ -283,6 +281,15 @@ export const getDaiEthAirDropAddress = (airdropDaiEthContract) => {
 
 export const getDaiEthAirDropRewardAmount = (airdropDaiEthContract) => {
   return airdropDaiEthContract.methods.rewardAmount().call();
+}
+
+export const getDaiEthAirDropScheduleAttend =  async(airdropDaiEthContract, account) => {
+  const scheduleCount = await airdropDaiEthContract.methods.scheduleCount().call(); 
+  return airdropDaiEthContract.methods.isNewRewardGiven(scheduleCount, account).call();
+}
+
+export const getNirvana =  async(airdropDaiEthContract, pid) => {
+  return airdropDaiEthContract.methods.getNirvana(pid).call();
 }
 
 export const getDaiEthAirDropTimeStamp = (airdropDaiEthContract) => {

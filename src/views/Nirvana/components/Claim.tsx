@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useWallet } from 'use-wallet'
+import { provider } from 'web3-core'
 import styled from 'styled-components'
 import Button from '../../../components/Button'
 import Card from '../../../components/Card'
@@ -8,9 +10,12 @@ import Label from '../../../components/Label'
 import Value from '../../../components/Value'
 import useAirdrop from '../../../hooks/useAirdrop'
 import useTimer from '../../../hooks/useTimer'
+import useChill from '../../../hooks/useChill'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 import Spacer from '../../../components/Spacer'
-
+import { getNirvanaStatus, getMasterChefContract, getDaiEthAirDropScheduleAttend, getNirvana } from '../../../chill/utils'
+import { airDropAddresses } from '../../../chill/lib/constants'
+import { getAirDropContract } from '../../../utils/airdrop'
 interface ClaimProps {
   pid: number
   name: string
@@ -18,9 +23,47 @@ interface ClaimProps {
 }
 
 const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
+  const chill = useChill()
+  const { ethereum } = useWallet()
+  const { account } = useWallet()
   const [pendingTx, setPendingTx] = useState(false)
+  const [isNirvana, setIsNirvavna] = useState(false)
+  const [isScheduleAttend, setIsScheduleAttend] = useState(false)
   const { onAirdrop } = useAirdrop(pid)
   const { totalBalanceReward, rewardAmount, days, hours, minutes, seconds } = useTimer(pid)
+
+  // const nirvanaRank = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
+
+  useEffect(() => {
+    async function process() {
+      let airdropContract;
+      console.log('pid:-- ', pid)
+      const networkId = 1;
+      const nirvanaRank = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
+      if (pid == 0) {
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
+      } else if (pid == 1) {
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
+      } else if (pid == 2) {
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.usdtEth[networkId]);
+      }
+      const scheduleAttend = await getDaiEthAirDropScheduleAttend(airdropContract, account)
+      const isNirva = await getNirvana(airdropContract, pid)
+
+      if(scheduleAttend == true) {
+        console.log('scheduleAttend: ', pid, scheduleAttend)
+        setIsScheduleAttend(true)
+      }
+        if(isNirva == 50) {
+          console.log('nirvanaRank:-- ', pid, isNirva)
+          setIsNirvavna(true)
+        }
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill]);
+  
 
   return (
     <Card>
@@ -40,17 +83,29 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
             <Label text={`${days.toString()} Days : ${hours.toString()} Hours : ${minutes.toString()} Minutes : ${seconds.toString()} Seconds`} />
           </StyledCardHeader>
           <StyledCardActions>
-            {name == "CHILL-ETH" ? 
-            <Button
-              // disabled={rewardAmount.gt(0) ? false : true}
-              disabled={true}
-              text={pendingTx ? 'Collecting Reward' : 'Claim Reward'}
-              onClick={async () => {
-                setPendingTx(true)
-                await onAirdrop()
-                setPendingTx(false)
+            {console.log('isNirvana:++', isNirvana)}
+            
+            { name== "CHILL-ETH" && isNirvana && !isScheduleAttend ? 
+                  <Button
+                  // disabled={rewardAmount.gt(0) ? false : true}
+                  disabled={false}
+                  text={pendingTx ? 'Collecting Reward' : 'Claim Reward'}
+                  onClick={async () => {
+                    setPendingTx(true)
+                    await onAirdrop()
+                    setPendingTx(false)
+                  }}
+                /> 
+                : <Button
+                disabled={true}
+                text={'You are not in Nirvana or already claimed!'}
+                onClick={async () => {
+                  setPendingTx(true)
+                  await onAirdrop()
+                  setPendingTx(false)
               }}
-            /> : <Value value="Coming Soon"/> }
+              />
+            }
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
