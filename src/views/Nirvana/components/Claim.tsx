@@ -43,6 +43,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
             {name == "CHILL-ETH" ? 
             <Button
               // disabled={rewardAmount.gt(0) ? false : true}
+              disabled={true}
               text={pendingTx ? 'Collecting Reward' : 'Claim Reward'}
               onClick={async () => {
                 setPendingTx(true)
