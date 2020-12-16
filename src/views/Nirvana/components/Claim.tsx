@@ -97,9 +97,10 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
         airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
       }
       const rewardAmount = await getDaiEthAirDropRewardAmount(airdropContract)
-      let trasferBalancePercent = new BigNumber(userAmount).multipliedBy(new BigNumber(100)).div(new BigNumber(totalPoolBalance))
+      let trasferBalancePercent = new BigNumber(userAmount).multipliedBy(new BigNumber(1e18)).div(new BigNumber(totalPoolBalance))
       // if(trasferBalancePercent.isGreaterThanOrEqualTo(1)) {
-      const transferBalance = trasferBalancePercent.integerValue(BigNumber.ROUND_FLOOR).multipliedBy(new BigNumber(rewardAmount)).div(new BigNumber(100)) 
+      // const transferBalance = trasferBalancePercent.integerValue(BigNumber.ROUND_FLOOR).multipliedBy(new BigNumber(rewardAmount)).div(new BigNumber(100)) 
+      const transferBalance = trasferBalancePercent.multipliedBy(new BigNumber(rewardAmount)).div(new BigNumber(1e18)) 
       // }
       
       console.log('userAmount++++', userAmount, pid)
@@ -125,6 +126,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
             <Value value={getBalanceNumber(totalBalanceReward)} />
             <Spacer/>
             <Label text="You will recieve:" />
+            {/* <Value value={getBalanceNumber(currentReward)} /> */}
             <Value value={!isScheduleAttend ? getBalanceNumber(currentReward) : '0' } />
             {/* <Value value={isScheduleAttend ? currentReward : '0' } /> */}
 
