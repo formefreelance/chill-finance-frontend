@@ -197,109 +197,109 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
     }
   }, [chill, setNirvana, getBalanceNumber(stakedBalance)]);
   
-  // useEffect(() => {
-  //   async function process() {
-  //     let totalAmt;
-  //     uniswapV2PairContract = await getUniswapV2Pair(ethereum as provider, lpTokenAddress);
-  //     const token0 = await getToken0(uniswapV2PairContract, account)
-  //     const reserves = await getReserves(uniswapV2PairContract, account)
-  //     const totalSupply = await getTotalSupply(ethereum as provider, lpTokenAddress)
-  //     const totalPoolBalance = await getTotalPoolBalance(getMasterChefContract(chill), farm.pid)
-  //     console.log("UniswapV2-totalPoolBalance: ", totalPoolBalance.toString())
+  useEffect(() => {
+    async function process() {
+      let totalAmt;
+      uniswapV2PairContract = await getUniswapV2Pair(ethereum as provider, lpTokenAddress);
+      const token0 = await getToken0(uniswapV2PairContract, account)
+      const reserves = await getReserves(uniswapV2PairContract, account)
+      const totalSupply = await getTotalSupply(ethereum as provider, lpTokenAddress)
+      const totalPoolBalance = await getTotalPoolBalance(getMasterChefContract(chill), farm.pid)
+      console.log("UniswapV2-totalPoolBalance: ", totalPoolBalance.toString())
       
-  //     // Toatl pool share in Dollar
-  //     if(token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2') {
-  //       const tokenBalance = totalPoolBalance.multipliedBy(new BigNumber(reserves._reserve0)).div(new BigNumber(totalSupply))
-  //       const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
-  //       const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
-  //       const usdtreserves = await getReserves(uniswapV2PairContract2, account)
-  //       let stableamount;
-  //       let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
-  //       if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
-  //         stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
-  //       } else {
-  //         stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
-  //       }
+      // Toatl pool share in Dollar
+      if(token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2') {
+        const tokenBalance = totalPoolBalance.multipliedBy(new BigNumber(reserves._reserve0)).div(new BigNumber(totalSupply))
+        const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
+        const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
+        const usdtreserves = await getReserves(uniswapV2PairContract2, account)
+        let stableamount;
+        let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
+        if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
+        } else {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
+        }
         
-  //       totalAmt = new BigNumber(tokenBalance)
-  //                           .div(new BigNumber(10).pow(18))
-  //                           .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
-  //                           .multipliedBy(new BigNumber(2)).toFixed(0)
-  //       setTotalAmount(totalAmt.toString())
-  //     } else {
-  //       const tokenBalance = totalPoolBalance.multipliedBy(new BigNumber(reserves._reserve1)).div(new BigNumber(totalSupply))
-  //       const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
-  //       const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
-  //       const usdtreserves = await getReserves(uniswapV2PairContract2, account)
-  //       let stableamount;
-  //       let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
-  //       if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
-  //         stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
-  //       } else {
-  //         stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
-  //       }        
-  //       totalAmt = new BigNumber(tokenBalance)
-  //                           .div(new BigNumber(10).pow(18))
-  //                           .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
-  //                           .multipliedBy(new BigNumber(2)).toFixed(0)
-  //       setTotalAmount(totalAmt.toString())
-  //     }
-  //   }
-  //   if (chill && account) {
-  //     process()
-  //   }
-  // }, [chill]);
+        totalAmt = new BigNumber(tokenBalance)
+                            .div(new BigNumber(10).pow(18))
+                            .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
+                            .multipliedBy(new BigNumber(2)).toFixed(0)
+        setTotalAmount(totalAmt.toString())
+      } else {
+        const tokenBalance = totalPoolBalance.multipliedBy(new BigNumber(reserves._reserve1)).div(new BigNumber(totalSupply))
+        const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
+        const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
+        const usdtreserves = await getReserves(uniswapV2PairContract2, account)
+        let stableamount;
+        let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
+        if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
+        } else {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
+        }        
+        totalAmt = new BigNumber(tokenBalance)
+                            .div(new BigNumber(10).pow(18))
+                            .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
+                            .multipliedBy(new BigNumber(2)).toFixed(0)
+        setTotalAmount(totalAmt.toString())
+      }
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill]);
 
   // User Share in Dollar
-  // useEffect(() => {
-  //   async function process() {
-  //     let yourShareInPool;
-  //     uniswapV2PairContract = await getUniswapV2Pair(ethereum as provider, lpTokenAddress);
-  //     const token0 = await getToken0(uniswapV2PairContract, account)
-  //     const reserves = await getReserves(uniswapV2PairContract, account)
-  //     const totalSupply = await getTotalSupply(ethereum as provider, lpTokenAddress)
-  //     const stakedBalance = await getStaked(getMasterChefContract(chill), farm.pid, account)
+  useEffect(() => {
+    async function process() {
+      let yourShareInPool;
+      uniswapV2PairContract = await getUniswapV2Pair(ethereum as provider, lpTokenAddress);
+      const token0 = await getToken0(uniswapV2PairContract, account)
+      const reserves = await getReserves(uniswapV2PairContract, account)
+      const totalSupply = await getTotalSupply(ethereum as provider, lpTokenAddress)
+      const stakedBalance = await getStaked(getMasterChefContract(chill), farm.pid, account)
       
-  //     if(token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2') {
-  //       const tokenBalance = stakedBalance.multipliedBy(new BigNumber(reserves._reserve0)).div(new BigNumber(totalSupply))
-  //       const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
-  //       const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
-  //       const usdtreserves = await getReserves(uniswapV2PairContract2, account)
-  //       let stableamount;
-  //       let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
-  //       if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
-  //         stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
-  //       } else {
-  //         stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
-  //       }        
-  //       yourShareInPool = new BigNumber(tokenBalance)
-  //                           .div(new BigNumber(10).pow(18))
-  //                           .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
-  //                           .multipliedBy(new BigNumber(2)).toFixed(0)
-  //       setYourShare(yourShareInPool.toString())
-  //     } else {
-  //       const tokenBalance = stakedBalance.multipliedBy(new BigNumber(reserves._reserve1)).div(new BigNumber(totalSupply))
-  //       const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
-  //       const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
-  //       const usdtreserves = await getReserves(uniswapV2PairContract2, account)
-  //       let stableamount;
-  //       let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
-  //       if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
-  //         stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
-  //       } else {
-  //         stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
-  //       }        
-  //       yourShareInPool = new BigNumber(tokenBalance)
-  //                           .div(new BigNumber(10).pow(18))
-  //                           .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
-  //                           .multipliedBy(new BigNumber(2)).toFixed(0)
-  //       setYourShare(yourShareInPool.toString())
-  //     }
-  //   }
-  //   if (chill && account) {
-  //     process()
-  //   }
-  // }, [chill]);
+      if(token0 == '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2') {
+        const tokenBalance = stakedBalance.multipliedBy(new BigNumber(reserves._reserve0)).div(new BigNumber(totalSupply))
+        const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
+        const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
+        const usdtreserves = await getReserves(uniswapV2PairContract2, account)
+        let stableamount;
+        let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
+        if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
+        } else {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
+        }        
+        yourShareInPool = new BigNumber(tokenBalance)
+                            .div(new BigNumber(10).pow(18))
+                            .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
+                            .multipliedBy(new BigNumber(2)).toFixed(0)
+        setYourShare(yourShareInPool.toString())
+      } else {
+        const tokenBalance = stakedBalance.multipliedBy(new BigNumber(reserves._reserve1)).div(new BigNumber(totalSupply))
+        const uniswapV2PairContract2 = await getUniswapV2Pair(ethereum as provider, '0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852');
+        const usdttoken0 = await getToken0(uniswapV2PairContract2, account)
+        const usdtreserves = await getReserves(uniswapV2PairContract2, account)
+        let stableamount;
+        let uniswapLib = await getUniswapV2Library(ethereum as provider, '0x917Ab0455eA95C1313B9B88cd902D99e6a5C6144')
+        if(usdttoken0 == "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2") {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), new BigNumber(usdtreserves._reserve0), new BigNumber(usdtreserves._reserve1))
+        } else {
+          stableamount = await getAmountOut(uniswapLib, new BigNumber(10).pow(18), usdtreserves._reserve1, usdtreserves._reserve0)
+        }        
+        yourShareInPool = new BigNumber(tokenBalance)
+                            .div(new BigNumber(10).pow(18))
+                            .multipliedBy(new BigNumber(stableamount).div(new BigNumber(10).pow(6)))
+                            .multipliedBy(new BigNumber(2)).toFixed(0)
+        setYourShare(yourShareInPool.toString())
+      }
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill]);
 
   const poolActive = true // startTime * 1000 - Date.now() <= 0
 
