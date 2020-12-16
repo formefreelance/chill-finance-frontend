@@ -13,9 +13,12 @@ import useTimer from '../../../hooks/useTimer'
 import useChill from '../../../hooks/useChill'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 import Spacer from '../../../components/Spacer'
-import { getNirvanaStatus, getMasterChefContract, getDaiEthAirDropScheduleAttend, getNirvana, getUserAmount } from '../../../chill/utils'
+import { getNirvanaStatus, getMasterChefContract, getDaiEthAirDropScheduleAttend, getNirvana, getUserAmount,
+    getTotalPoolBalance, getDaiEthAirDropRewardAmount 
+      } from '../../../chill/utils'
 import { airDropAddresses } from '../../../chill/lib/constants'
 import { getAirDropContract } from '../../../utils/airdrop'
+import BigNumber from 'bignumber.js'
 interface ClaimProps {
   pid: number
   name: string
@@ -30,14 +33,15 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
   const [isNirvana, setIsNirvavna] = useState(false)
   const [isScheduleAttend, setIsScheduleAttend] = useState(false)
   const [isAmount, setIsUserHasAmount] = useState(false)
+  const [currentReward, setUserCurrentReward] = useState(new BigNumber(0))
   const { onAirdrop } = useAirdrop(pid)
   const { totalBalanceReward, rewardAmount, days, hours, minutes, seconds } = useTimer(pid)
-  
+  const networkId = 1;
+
   useEffect(() => {
     async function process() {
       let airdropContract;
       console.log('pid:-- ', pid)
-      const networkId = 1;
       const nirvanaRank = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
       const userAmount = await getUserAmount(pid, account, getMasterChefContract(chill))
       if(userAmount > 0) {
@@ -68,6 +72,28 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
     }
   }, [chill]);
   
+  
+  useEffect(() => {
+    async function process() {
+      let airdropContract;
+      const totalPoolBalance = await getTotalPoolBalance(getMasterChefContract(chill), pid)
+      const userAmount = await getUserAmount(pid, account, getMasterChefContract(chill))
+      if (pid == 0) {
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
+      } else if (pid == 1) {
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
+      } else if (pid == 2) {
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.usdtEth[networkId]);
+      }
+      const rewardAmount = await getDaiEthAirDropRewardAmount(airdropContract)
+      const trasferBalancePercent = new BigNumber(userAmount).multipliedBy(new BigNumber(100)).div(new BigNumber(totalPoolBalance))
+      const transferBalance = trasferBalancePercent.multipliedBy(new BigNumber(rewardAmount)).div(new BigNumber(100)) 
+      setUserCurrentReward(transferBalance)
+    }
+    if (chill && account) {
+      process()
+    }
+  }, [chill]);
 
   return (
     <Card>
@@ -80,8 +106,8 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
             <Label text="Total Reward Pool" />
             <Value value={getBalanceNumber(totalBalanceReward)} />
             <Spacer/>
-            <Label text="Current Reward Session" />
-            <Value value={getBalanceNumber(rewardAmount)} />
+            <Label text="You will recieve:" />
+            <Value value={getBalanceNumber(currentReward)} />
             <Spacer/>
             <Label text="Time Until Session" />
             <Label text={`${days.toString()} Days : ${hours.toString()} Hours : ${minutes.toString()} Minutes : ${seconds.toString()} Seconds`} />
