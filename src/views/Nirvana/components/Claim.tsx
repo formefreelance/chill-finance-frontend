@@ -14,7 +14,7 @@ import useChill from '../../../hooks/useChill'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 import Spacer from '../../../components/Spacer'
 import { getNirvanaStatus, getMasterChefContract, getDaiEthAirDropScheduleAttend, getNirvana, getUserAmount,
-    getTotalPoolBalance, getDaiEthAirDropRewardAmount 
+    getTotalPoolBalance, getDaiEthAirDropRewardAmount, getDaiEthAirDropTimeStamp, getDaiEthAirDropNextScheduleAttend
       } from '../../../chill/utils'
 import { airDropAddresses } from '../../../chill/lib/constants'
 import { getAirDropContract } from '../../../utils/airdrop'
@@ -55,18 +55,34 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
       }
       const scheduleAttend = await getDaiEthAirDropScheduleAttend(airdropContract, account)
       // const isNirva = await getNirvana(airdropContract, pid)
+      const nirvanaTimeStamp = await getDaiEthAirDropTimeStamp(airdropContract);
+      const currentTimeStamp = new Date().getTime()
+
       if(scheduleAttend == true) {
         setIsScheduleAttend(true)
-      }
-        if(nirvanaRank == 50) {
-          setIsNirvavna(true)
+        console.log('Schedule: ', pid, scheduleAttend)
+      } 
+
+      const t = new BigNumber(currentTimeStamp).div(new BigNumber(1000)).toNumber().toString()
+      console.log("TimeStamper: ", t)
+
+      if (new BigNumber(nirvanaTimeStamp).lt(new BigNumber(currentTimeStamp).div(new BigNumber(1000)).toNumber())) {
+        console.log("Timess:", pid)
+        const nextSchedule = await getDaiEthAirDropNextScheduleAttend(airdropContract, account)
+        if(nextSchedule == false) {
+          console.log('scheduleCount: ', pid, nextSchedule)
+          setIsScheduleAttend(false)
         }
+      }
+      if(nirvanaRank == 50) {
+        console.log("Nirvanas: ", pid, true)
+        setIsNirvavna(true)
+      }
     }
     if (chill && account) {
       process()
     }
   }, [chill]);
-  
   
   useEffect(() => {
     async function process() {
@@ -76,9 +92,9 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
       if (pid == 0) {
         airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
       } else if (pid == 1) {
-        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
-      } else if (pid == 2) {
         airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.usdtEth[networkId]);
+      } else if (pid == 2) {
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
       }
       const rewardAmount = await getDaiEthAirDropRewardAmount(airdropContract)
       const trasferBalancePercent = new BigNumber(userAmount).multipliedBy(new BigNumber(100)).div(new BigNumber(totalPoolBalance))
@@ -101,7 +117,9 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
             <Value value={getBalanceNumber(totalBalanceReward)} />
             <Spacer/>
             <Label text="You will recieve:" />
-            <Value value={getBalanceNumber(currentReward)} />
+            <Value value={!isScheduleAttend ? getBalanceNumber(currentReward) : '0' } />
+            <Label text={isScheduleAttend ? "You have claimed for this session" : ''} />
+            <Spacer/>
             <Spacer/>
             <Label text="Time Until Session" />
             <Label text={`${days.toString()} Days : ${hours.toString()} Hours : ${minutes.toString()} Minutes : ${seconds.toString()} Seconds`} />
@@ -109,7 +127,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
           <StyledCardActions>
             {console.log('isNirvana:++', isNirvana)}
             
-            { isNirvana && isScheduleAttend==false && isAmount ? 
+            { isNirvana && !isScheduleAttend && isAmount ? 
                   <Button
                   // disabled={rewardAmount.gt(0) ? false : true}
                   disabled={false}

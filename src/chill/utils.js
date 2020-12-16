@@ -299,6 +299,12 @@ export const getDaiEthAirDropScheduleAttend =  async(airdropDaiEthContract, acco
   return airdropDaiEthContract.methods.isNewRewardGiven(scheduleCount, account).call();
 }
 
+export const getDaiEthAirDropNextScheduleAttend =  async(airdropDaiEthContract, account) => {
+  const scheduleCount = await airdropDaiEthContract.methods.scheduleCount().call(); 
+  console.log("scheduleCount: ", scheduleCount)
+  return airdropDaiEthContract.methods.isNewRewardGiven(new BigNumber(scheduleCount).plus(new BigNumber(1)), account).call();
+}
+
 export const getNirvana =  async(airdropDaiEthContract, pid) => {
   return airdropDaiEthContract.methods.getNirvana(pid).call();
 }
