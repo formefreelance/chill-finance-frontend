@@ -89,7 +89,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
           <StyledCardActions>
             {console.log('isNirvana:++', isNirvana)}
             
-            {/* { name== "CHILL-ETH" && isNirvana && !isScheduleAttend && isAmount ?  */}
+            { name== "CHILL-ETH" && isNirvana && !isScheduleAttend && isAmount ? 
                   <Button
                   // disabled={rewardAmount.gt(0) ? false : true}
                   disabled={false}
@@ -100,17 +100,17 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
                     setPendingTx(false)
                   }}
                 /> 
-                {/* // : 
-              //   <Button
-              //   disabled={true}
-              //   text={'You are not in Nirvana or already claimed!'}
-              //   onClick={async () => {
-              //     setPendingTx(true)
-              //     await onAirdrop()
-              //     setPendingTx(false)
-              // }}
-              // />
-            // } */}
+                : 
+                 <Button
+                 disabled={true}
+                 text={'You are not in Nirvana or already claimed!'}
+                 onClick={async () => {
+                   setPendingTx(true)
+                   await onAirdrop()
+                   setPendingTx(false)
+               }}
+               />
+             }
           </StyledCardActions>
         </StyledCardContentInner>
       </CardContent>
