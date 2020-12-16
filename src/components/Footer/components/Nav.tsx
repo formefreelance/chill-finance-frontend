@@ -22,6 +22,9 @@ const Nav: React.FC = () => {
       <StyledLink target="_blank" href="https://www.youtube.com/watch?v=hohy1XGyk6I">
         Mew
       </StyledLink>
+      <StyledLink target="_blank" href="https://twitter.com/chillswap">
+        Twitter
+      </StyledLink>
     </StyledNav>
   )
 }
