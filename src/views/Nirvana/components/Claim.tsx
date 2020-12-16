@@ -127,7 +127,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
             <Spacer/>
             <Label text="You will recieve:" />
             {/* <Value value={getBalanceNumber(currentReward)} /> */}
-            <Value value={!isScheduleAttend ? getBalanceNumber(currentReward) : '0' } />
+            <Value value={!isScheduleAttend ? getBalanceNumber(currentReward) : '0.000' } />
             {/* <Value value={isScheduleAttend ? currentReward : '0' } /> */}
 
             <Label text={isScheduleAttend ? "You have claimed for this session" : ''} />
