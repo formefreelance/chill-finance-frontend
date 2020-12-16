@@ -41,29 +41,24 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
   useEffect(() => {
     async function process() {
       let airdropContract;
-      console.log('pid:-- ', pid)
       const nirvanaRank = await getNirvanaStatus(pid, account, getMasterChefContract(chill))
       const userAmount = await getUserAmount(pid, account, getMasterChefContract(chill))
       if(userAmount > 0) {
-        console.log('userAmount', pid, userAmount)
         setIsUserHasAmount(true)
       }
       if (pid == 0) {
         airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.chillEth[networkId]);
       } else if (pid == 1) {
-        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
-      } else if (pid == 2) {
         airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.usdtEth[networkId]);
+      } else if (pid == 2) {
+        airdropContract = await getAirDropContract(ethereum as provider, airDropAddresses.daiEth[networkId]);
       }
       const scheduleAttend = await getDaiEthAirDropScheduleAttend(airdropContract, account)
       // const isNirva = await getNirvana(airdropContract, pid)
-
       if(scheduleAttend == true) {
-        console.log('scheduleAttend: ', pid, scheduleAttend)
         setIsScheduleAttend(true)
       }
         if(nirvanaRank == 50) {
-          console.log('nirvanaRank:-- ', pid, nirvanaRank)
           setIsNirvavna(true)
         }
     }
@@ -100,7 +95,6 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
       <CardContent>
         <StyledCardContentInner>
           <StyledCardHeader>
-            
             <CardIcon>{<img src={iconSrc} style={{ marginTop: -4, width: "120px", height: "120px" }} />}</CardIcon>
             <StyledTitle>{name}</StyledTitle>
             <Label text="Total Reward Pool" />
@@ -115,7 +109,7 @@ const Claim: React.FC<ClaimProps> = ({ pid, name, iconSrc }) => {
           <StyledCardActions>
             {console.log('isNirvana:++', isNirvana)}
             
-            { name== "CHILL-ETH" && isNirvana && !isScheduleAttend && isAmount ? 
+            { isNirvana && isScheduleAttend==false && isAmount ? 
                   <Button
                   // disabled={rewardAmount.gt(0) ? false : true}
                   disabled={false}
