@@ -109,7 +109,7 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
           <StyledCardHeader>
           <CardIcon><img src={chillicon} style={{ marginTop: -4, width: "120px", height: "120px" }} /></CardIcon>
             <Value value={getBalanceNumber(earnings)} />
-            <Label text="CHILL Earned" />
+            <Label text="CHILL Earned After Tax" />
           </StyledCardHeader>
           <StyledCardHeader2>
           {/* <StyledCardActions> */}
