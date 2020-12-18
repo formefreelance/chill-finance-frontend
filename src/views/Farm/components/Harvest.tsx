@@ -48,20 +48,20 @@ const Harvest: React.FC<HarvestProps> = ({ pid }) => {
 
         let totalBlocksRest;
         let timeStamp;
-        if (diffBlock.lt(new BigNumber(2201))) {
-          totalBlocksRest = new BigNumber(2201).minus(diffBlock)
-        } else if (diffBlock.lt(new BigNumber(4402))) {
-          totalBlocksRest = new BigNumber(4402).minus(diffBlock)
-        } else if (diffBlock.lt(new BigNumber(6603))) {
-          totalBlocksRest = new BigNumber(6603).minus(diffBlock)
-        } else if (diffBlock.lt(new BigNumber(8804))) {
-          totalBlocksRest = new BigNumber(8804).minus(diffBlock)
-        } else if (diffBlock.lt(new BigNumber(11005))) {
-          totalBlocksRest = new BigNumber(11005).minus(diffBlock)
+        if (diffBlock.lt(new BigNumber(4400))) {
+          totalBlocksRest = new BigNumber(4400).minus(diffBlock)
+        } else if (diffBlock.lt(new BigNumber(8800))) {
+          totalBlocksRest = new BigNumber(8800).minus(diffBlock)
+        } else if (diffBlock.lt(new BigNumber(13195))) {
+          totalBlocksRest = new BigNumber(13195).minus(diffBlock)
+        } else if (diffBlock.lt(new BigNumber(17591))) {
+          totalBlocksRest = new BigNumber(17591).minus(diffBlock)
+        } else if (diffBlock.lt(new BigNumber(21982))) {
+          totalBlocksRest = new BigNumber(21982).minus(diffBlock)
         } else {
           setTimeStamp(0);
         }
-        timeStamp = new BigNumber(totalBlocksRest).multipliedBy(new BigNumber(28800)).div(new BigNumber(2201))
+        timeStamp = new BigNumber(totalBlocksRest).multipliedBy(new BigNumber(57600)).div(new BigNumber(4400))
         const totalTimeStamp = new BigNumber(timeStamp).plus(new BigNumber(time))
         setTimeStamp(totalTimeStamp.toNumber());
       } else {
