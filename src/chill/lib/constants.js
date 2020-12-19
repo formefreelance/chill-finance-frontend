@@ -97,7 +97,7 @@ export const airDropAddresses = {
 // Mainnet
 export const instaStakeAddress = {
   instaStake: {
-    1: '0xb02A8e3CEAfd27b1AC6dD600329A428d7e0cE27f',
+    1: '0xB5B4c41ed9bA8B796e88D6b15b5D9a5334292e22',
   }
 }
 
