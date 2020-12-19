@@ -193,9 +193,9 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon, tokenAd
 
           <Spacer/>
           
-          { tokenName != "USDT-ETH UNI-V2 LP" ? 
+          {/* { tokenName != "USDT-ETH UNI-V2 LP" ? 
           (
-            <>
+            <> */}
               <Button
               // disabled={ethBalance.eq(new BigNumber(0))}
               text="Fast Buy LP"
@@ -218,8 +218,8 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon, tokenAd
                   </>
                 )}
               </StyledCardActions2>             
-          </> 
-          ) : ''}
+          {/* </> 
+          ) : ''} */}
           <Spacer/>
           <StyledLink
             target="_blank"
