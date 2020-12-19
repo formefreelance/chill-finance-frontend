@@ -272,9 +272,8 @@ export const addLiquidity = async (instaStakeContract, tokenAddress, amount, acc
 }
 
 export const removeLiquidity = async (uniswapRouterContract, tokenAddress, amount, account, web3provider) => {
-  let now = new Date().getTime() / 1000
+  let now = ((new Date().getTime()) / 1000 ) + 1000
   const web3 = await getWeb3(web3provider)
-  console.log('uniswapRouterContract: ',uniswapRouterContract);
   return uniswapRouterContract.methods.removeLiquidity(
       '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
       tokenAddress,
@@ -282,7 +281,7 @@ export const removeLiquidity = async (uniswapRouterContract, tokenAddress, amoun
       new BigNumber(0),
       new BigNumber(0),
       account,
-      now.toString()
+      now.toFixed().toString()
     )
     .send({ from: account })
     .on('transactionHash', (tx) => {
