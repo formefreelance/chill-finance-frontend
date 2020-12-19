@@ -282,7 +282,7 @@ export const removeLiquidity = async (uniswapRouterContract, tokenAddress, amoun
       new BigNumber(0),
       new BigNumber(0),
       account,
-      now
+      new BigNumber(now)
     )
     .send({ from: account })
     .on('transactionHash', (tx) => {
