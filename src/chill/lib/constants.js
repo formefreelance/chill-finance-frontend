@@ -2,9 +2,9 @@ import React from 'react'
 import BigNumber from 'bignumber.js/bignumber'
 import cat1 from "../../assets/img/cat1.png";
 import cat2 from "../../assets/img/cat2.png";
-import cat3 from "../../assets/img/cat3.png";
-import cat4 from "../../assets/img/cat4.png";
-import cat5 from "../../assets/img/cat5.png";
+import cat3 from "../../assets/img/cat3-c.png";
+import cat4 from "../../assets/img/cat4-c.png";
+import cat5 from "../../assets/img/cat5-c.png";
 
 export const SUBTRACT_GAS_LIMIT = 100000
 
@@ -87,6 +87,35 @@ export const airDropAddresses = {
   }
 }
 
+// Kovan
+// export const instaStakeAddress = {
+//   instaStake: {
+//     42: '0x5BC084725FCED5c57EC7E607f187B199D9FcFf16',
+//   }
+// }
+
+// Mainnet
+export const instaStakeAddress = {
+  instaStake: {
+    1: '0xb02A8e3CEAfd27b1AC6dD600329A428d7e0cE27f',
+  }
+}
+
+// Kovan
+// export const uniswapRouterAddresses = {
+//   uniswapRouterAddress: {
+//     42: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
+//   }
+// }
+
+// Mainnet
+export const uniswapRouterAddresses = {
+  uniswapRouterAddress: {
+    1: '0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D',
+  }
+}
+
+
 /*
 UNI-V2 LP Address on mainnet for reference
 ==========================================
@@ -167,7 +196,7 @@ export const supportedPools = [
     name: 'CHILL-ETH',
     symbol: 'CHILL-ETH UNI-V2 LP',
     tokenSymbol: 'CHILL',
-    iconSrc: cat4,
+    iconSrc: cat5,
     icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
   },
   {
@@ -181,8 +210,8 @@ export const supportedPools = [
     name: 'USDT-ETH',
     symbol: 'USDT-ETH UNI-V2 LP',
     tokenSymbol: 'USDT',
-    iconSrc: cat5,
-    icon: <img src={cat5} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
+    iconSrc: cat4,
+    icon: <img src={cat4} style={{ marginTop: -4, width: "120px", height: "120px" }} />,
   },
   {
     pid: 2,

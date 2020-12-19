@@ -13,6 +13,11 @@ export const getContract = (provider: provider, address: string) => {
   return contract
 }
 
+export const getWeb3 = (provider: provider) => {
+  const web3 = new Web3(provider)
+  return web3
+}
+
 export const getAllowance = async (
   lpContract: Contract,
   masterChefContract: Contract,
@@ -38,6 +43,19 @@ export const getBalance = async (
     const balance: string = await lpContract.methods
       .balanceOf(userAddress)
       .call()
+    return balance
+  } catch (e) {
+    return '0'
+  }
+}
+
+export const getEthBalance = async (
+  provider: provider,
+  userAddress: string,
+): Promise<string> => {
+  try {
+    const web3 = new Web3(provider)
+    const balance: string = await web3.eth.getBalance(userAddress)
     return balance
   } catch (e) {
     return '0'

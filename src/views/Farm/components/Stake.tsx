@@ -15,18 +15,24 @@ import Label from '../../../components/Label'
 import Value from '../../../components/Value'
 import useAllowance from '../../../hooks/useAllowance'
 import useApprove from '../../../hooks/useApprove'
+import useRemoveApprove from '../../../hooks/useRemoveApprove'
 import useModal from '../../../hooks/useModal'
 import useStake from '../../../hooks/useStake'
 import useStakedBalance from '../../../hooks/useStakedBalance'
 import useTokenBalance from '../../../hooks/useTokenBalance'
 import useUnstake from '../../../hooks/useUnstake'
+import useAddLiquidity from '../../../hooks/useAddLiquidity'
+import useRemoveLiquidity from "../../../hooks/useRemoveLiquidity";
 import useChill from '../../../hooks/useChill'
 import { getBalanceNumber } from '../../../utils/formatBalance'
 import { getNirvanaStatus, getMasterChefContract } from '../../../chill/utils'
 import DepositModal from './DepositModal'
 import WithdrawModal from './WithdrawModal'
+import AddLiquidityModal from './AddLiquidityModal'
+import RemoveLiquidityModal from './RemoveLiquidityModal'
 import Spacer from '../../../components/Spacer'
 import logo from '../../../assets/img/chillicon.png'
+import useEthBalance from '../../../hooks/useEthBalance'
 
 interface StakeProps {
   lpContract: Contract
@@ -38,21 +44,42 @@ interface StakeProps {
 
 const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon, tokenAddress }) => {
   const [requestedApproval, setRequestedApproval] = useState(false)
+  const [requestedRemoveApproval, setRequestedRemoveApproval] = useState(false)
   const [nirvana, setNirvana] = useState<BigNumber>()
   const [nirvanaTax, setNirvanaTax] = useState<BigNumber>()
   const [isNirvana, setIsNirvavna] = useState(false)
 
-  const allowance = useAllowance(lpContract)
+  const allowance = useAllowance(lpContract, 0)
+  const removeAllowance = useAllowance(lpContract, 1)
   const { onApprove } = useApprove(lpContract)
+  const { onRemoveApprove } = useRemoveApprove(lpContract)
 
   const tokenBalance = useTokenBalance(lpContract.options.address)
-  console.log("lpContractsss: ", tokenAddress)
+  const ethBalance = useEthBalance()
   const stakedBalance = useStakedBalance(pid)
 
   const { onStake } = useStake(pid)
   const { onUnstake } = useUnstake(pid)
+  const { onAddLiquidity } = useAddLiquidity(pid, tokenAddress)
+  const { onRemoveLiquidity } = useRemoveLiquidity(tokenAddress)
   const { account } = useWallet()
   const chill = useChill();
+
+  const [onPresentRemoveLiquidity] = useModal(
+    <RemoveLiquidityModal
+      max={tokenBalance}
+      onConfirm={onRemoveLiquidity}
+      tokenName={tokenName}
+    />,
+  )
+
+  const [onPresentAddLiquidity] = useModal(
+    <AddLiquidityModal
+      max={ethBalance}
+      onConfirm={onAddLiquidity}
+      tokenName={tokenName}
+    />,
+  )
 
   const [onPresentDeposit] = useModal(
     <DepositModal
@@ -115,6 +142,19 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon, tokenAd
     }
   }, [onApprove, setRequestedApproval])
 
+  const handleRemoveApprove = useCallback(async () => {
+    try {
+      setRequestedRemoveApproval(true)
+      const txHash = await onRemoveApprove()
+      // user rejected tx or didn't go thru
+      if (!txHash) {
+        setRequestedRemoveApproval(false)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }, [onApprove, setRequestedRemoveApproval])
+
 
   return (
     <Card>
@@ -150,6 +190,36 @@ const Stake: React.FC<StakeProps> = ({ lpContract, pid, tokenName, icon, tokenAd
               </>
             )}
           </StyledCardActions>
+
+          <Spacer/>
+          
+          { tokenName != "USDT-ETH UNI-V2 LP" ? 
+          (
+            <>
+              <Button
+              // disabled={ethBalance.eq(new BigNumber(0))}
+              text="Fast Buy LP"
+              onClick={onPresentAddLiquidity}
+              />
+              <StyledCardActions2>
+                {!removeAllowance.toNumber() ? (
+                  <Button
+                    disabled={requestedRemoveApproval}
+                    onClick={handleRemoveApprove}
+                    text={`Approve Fast Redeem LP`}
+                  />
+                ) : (
+                  <>
+                    <Button
+                      disabled={tokenBalance.eq(new BigNumber(0))}
+                      text="Fast Redeem LP"
+                      onClick={onPresentRemoveLiquidity}
+                    />
+                  </>
+                )}
+              </StyledCardActions2>             
+          </> 
+          ) : ''}
           <Spacer/>
           <StyledLink
             target="_blank"
@@ -172,6 +242,13 @@ const StyledCardActions = styled.div`
   display: flex;
   justify-content: center;
   margin-top: ${(props) => props.theme.spacing[6]}px;
+  width: 100%;
+`
+
+const StyledCardActions2 = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: ${(props) => props.theme.spacing[2]}px;
   width: 100%;
 `
 

@@ -3,13 +3,17 @@ import ERC20Abi from './abi/erc20.json'
 import MasterChefAbi from './abi/masterchef.json'
 import ChillAbi from './abi/chill.json'
 import AirdropAbi from './abi/airdrop.json'
+import InstaStakeAbi from './abi/instastake.json'
 import UNIV2PairAbi from './abi/uni_v2_lp.json'
+import UniswapRouter02Abi from './abi/unirouter02.json'
 import WETHAbi from './abi/weth.json'
 import {
   contractAddresses,
   airDropAddresses,
   SUBTRACT_GAS_LIMIT,
   supportedPools,
+  instaStakeAddress,
+  uniswapRouterAddresses
 } from './constants.js'
 import * as Types from './types.js'
 
@@ -27,6 +31,8 @@ export class Contracts {
     this.masterChef = new this.web3.eth.Contract(MasterChefAbi)
     this.weth = new this.web3.eth.Contract(WETHAbi)
     this.airDropDaiETH = new this.web3.eth.Contract(AirdropAbi)
+    this.instaStake = new this.web3.eth.Contract(InstaStakeAbi)
+    this.uniswapRouter = new this.web3.eth.Contract(UniswapRouter02Abi)
 
     this.pools = supportedPools.map((pool) =>
       Object.assign(pool, {
@@ -52,6 +58,8 @@ export class Contracts {
     setProvider(this.masterChef, contractAddresses.masterChef[networkId])
     setProvider(this.weth, contractAddresses.weth[networkId])
     setProvider(this.airDropDaiETH, airDropAddresses.daiEth[networkId])
+    setProvider(this.instaStake, instaStakeAddress.instaStake[networkId])
+    setProvider(this.uniswapRouter, uniswapRouterAddresses.uniswapRouterAddress[networkId])
 
     this.pools.forEach(
       ({ lpContract, lpAddress, tokenContract, tokenAddress }) => {
@@ -65,6 +73,8 @@ export class Contracts {
     this.chill.options.from = account
     this.masterChef.options.from = account
     this.airDropDaiETH.options.from = account
+    this.instaStake.options.from = account
+    this.uniswapRouter.options.from = account
   }
 
   async callContractFunction(method, options) {

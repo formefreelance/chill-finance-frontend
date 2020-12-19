@@ -2,7 +2,7 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import CardIcon from '../CardIcon'
-import logo from "../../assets/img/cat5.png" 
+import logo from "../../assets/img/cat5-c.png" 
 interface LoaderProps {
   text?: string
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import { useWallet } from 'use-wallet'
-import logo from '../../assets/img/cat5.png'
+import logo from '../../assets/img/cat5-c.png'
 import Button from '../../components/Button'
 import Page from '../../components/Page'
 import PageHeader from '../../components/PageHeader'

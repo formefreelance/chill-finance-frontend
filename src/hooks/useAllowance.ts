@@ -7,21 +7,31 @@ import { provider } from 'web3-core'
 import { Contract } from 'web3-eth-contract'
 
 import { getAllowance } from '../utils/erc20'
-import { getMasterChefContract } from '../chill/utils'
+import { getMasterChefContract, getUniswapRouterContract } from '../chill/utils'
 
-const useAllowance = (lpContract: Contract) => {
+const useAllowance = (lpContract: Contract, flag: Number) => {
   const [allowance, setAllowance] = useState(new BigNumber(0))
   const { account }: { account: string; ethereum: provider } = useWallet()
   const chill = useChill()
   const masterChefContract = getMasterChefContract(chill)
-
+  const uniswapRouterContract = getUniswapRouterContract(chill)
+  let allowances
+  
   const fetchAllowance = useCallback(async () => {
-    const allowance = await getAllowance(
-      lpContract,
-      masterChefContract,
-      account,
-    )
-    setAllowance(new BigNumber(allowance))
+    if (flag == 0) {
+      allowances = await getAllowance(
+        lpContract,
+        masterChefContract,
+        account,
+      )
+    } else {
+      allowances = await getAllowance(
+        lpContract,
+        uniswapRouterContract,
+        account,
+      )
+    }
+    setAllowance(new BigNumber(allowances))
   }, [account, masterChefContract, lpContract])
 
   useEffect(() => {

@@ -32,7 +32,7 @@ const TokenInput: React.FC<TokenInputProps> = ({
         )}
         onChange={onChange}
         placeholder="0"
-        value={value}
+        value={value ? value : '0'}
       />
     </StyledTokenInput>
   )

@@ -1,5 +1,6 @@
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
+import { getWeb3 } from "../utils/erc20";
 
 BigNumber.config({
   EXPONENTIAL_AT: 1000,
@@ -75,6 +76,7 @@ export const getWethContract = (chill) => {
 export const getMasterChefContract = (chill) => {
   return chill && chill.contracts && chill.contracts.masterChef
 }
+
 export const getChillContract = (chill) => {
   return chill && chill.contracts && chill.contracts.chill
 }
@@ -196,9 +198,9 @@ export const getTotalLPWethValue = async (
   }
 }
 
-export const approve = async (lpContract, masterChefContract, account) => {
+export const approve = async (lpContract, approvalContract, account) => {
   return lpContract.methods
-    .approve(masterChefContract.options.address, ethers.constants.MaxUint256)
+    .approve(approvalContract.options.address, ethers.constants.MaxUint256)
     .send({ from: account })
 }
 
@@ -239,6 +241,49 @@ export const unstake = async (masterChefContract, pid, amount, account) => {
 export const harvest = async (masterChefContract, pid, account) => {
   return masterChefContract.methods
     .deposit(pid, '0')
+    .send({ from: account })
+    .on('transactionHash', (tx) => {
+      console.log(tx)
+      return tx.transactionHash
+    })
+}
+
+export const getInstaStakeContract = (chill) => {
+  return chill && chill.contracts && chill.contracts.instaStake
+}
+
+export const getUniswapRouterContract = (chill) => {
+  return chill && chill.contracts && chill.contracts.uniswapRouter
+}
+
+export const addLiquidity = async (instaStakeContract, tokenAddress, amount, account, web3provider) => {
+  const web3 = await getWeb3(web3provider)
+  console.log('tokenAddress', tokenAddress)
+  return instaStakeContract.methods
+    .deposit(
+      tokenAddress,
+      ['0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', tokenAddress]
+    )
+    .send({ from: account, value: web3.utils.toWei(amount) })
+    .on('transactionHash', (tx) => {
+      console.log(tx)
+      return tx.transactionHash
+    })
+}
+
+export const removeLiquidity = async (uniswapRouterContract, tokenAddress, amount, account, web3provider) => {
+  let now = new Date().getTime() / 1000
+  const web3 = await getWeb3(web3provider)
+  console.log('uniswapRouterContract: ',uniswapRouterContract);
+  return uniswapRouterContract.methods.removeLiquidity(
+      '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+      tokenAddress,
+      web3.utils.toWei(amount),
+      new BigNumber(0),
+      new BigNumber(0),
+      account,
+      now
+    )
     .send({ from: account })
     .on('transactionHash', (tx) => {
       console.log(tx)

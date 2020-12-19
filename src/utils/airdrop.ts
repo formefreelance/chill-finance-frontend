@@ -3,6 +3,7 @@ import { provider } from 'web3-core'
 import { Contract } from 'web3-eth-contract'
 import { AbiItem } from 'web3-utils'
 import AirDrop from '../constants/abi/AirDrop.json'
+import useChill from "../hooks/useChill";
 
 export const getAirDropContract = (provider: provider, address: string) => {
   const web3 = new Web3(provider)

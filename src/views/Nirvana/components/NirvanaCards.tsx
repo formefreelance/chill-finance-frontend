@@ -10,7 +10,7 @@ import Claim from './Claim'
 interface FarmWithStakedValue extends Farm, StakedValue {
 }
 
-const FarmCards: React.FC = () => {
+const NirvanaCards: React.FC = () => {
   const [farms] = useFarms()
   const stakedValue = useAllStakedValue()
 
@@ -37,7 +37,7 @@ const FarmCards: React.FC = () => {
           <StyledRow key={i}>
             {farmRow.map((farm, j) => (
               <React.Fragment key={j}>
-                <FarmCard farm={farm} />
+                <NirvanaCard farm={farm} />
                 {(j === 0 || j === 1) && <StyledSpacer />}
               </React.Fragment>
             ))}
@@ -47,11 +47,11 @@ const FarmCards: React.FC = () => {
   )
 }
 
-interface FarmCardProps {
+interface NirvanaCardProps {
   farm: FarmWithStakedValue
 }
 
-const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
+const NirvanaCard: React.FC<NirvanaCardProps> = ({ farm }) => {
   return (
     <StyledCardWrapper>
       {farm.tokenSymbol === 'CHILL' && <StyledCardAccent />}
@@ -175,4 +175,4 @@ const StyledInsight = styled.div`
   padding: 0 12px;
 `
 
-export default FarmCards
+export default NirvanaCards
