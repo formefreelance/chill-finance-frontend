@@ -307,6 +307,9 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
     <StyledCardWrapper>
       {farm.tokenSymbol === 'CHILL' && <StyledCardAccent />}
       <Card>
+      {farm.tokenSymbol === 'CHILL' && 
+        <StyledAllocPoint><StyledCardIcon>🌟 8x</StyledCardIcon></StyledAllocPoint> 
+      }
         <CardContent>
           <StyledContent>
           <StyledCardActions>
@@ -478,6 +481,14 @@ const StyledDetails = styled.div`
   text-align: center;
 `
 
+const StyledAllocPoint = styled.div`
+  font-family: 'Kaushan Script', sans-serif;
+  color: ${(props) => props.theme.color.grey[500]};
+  margin-top: -20px;
+  margin-left: -15px;
+  font-size: 30px;
+`
+
 const StyledDetail = styled.div`
   color: ${(props) => props.theme.color.grey[500]};
 `
@@ -538,5 +549,21 @@ const StyledInsight = styled.div`
   text-align: center;
   padding: 0 12px;
 `
+
+const StyledCardIcon = styled.div`
+  color: ${(props) => props.theme.color.grey[600]};
+  background-color: ${props => props.theme.color.grey[200]};
+  height: 50px;
+  width: 100px;
+  border-radius: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  box-shadow: inset 4px 4px 8px ${props => props.theme.color.grey[300]},
+    inset -6px -6px 12px ${props => props.theme.color.grey[100]};
+  margin: 0 auto ${props => props.theme.spacing[3]}px;
+  font-size: 24px;
+  font-weight: 700;
+  margin: ${(props) => props.theme.spacing[2]}px 0 0;`
 
 export default FarmCards
