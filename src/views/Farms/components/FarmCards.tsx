@@ -308,18 +308,22 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm }) => {
       {farm.tokenSymbol === 'CHILL' && <StyledCardAccent />}
       <Card>
       {farm.tokenSymbol === 'CHILL' && 
-        <StyledAllocPoint><StyledCardIcon>🌟 8x</StyledCardIcon></StyledAllocPoint> 
+        <StyledAllocPoint><StyledCardIcon>🌟 {farm.allocPoint ? `${farm.allocPoint}x` : '0x'}</StyledCardIcon></StyledAllocPoint> 
+      }
+      
+      {farm.tokenSymbol != 'CHILL' && 
+        <StyledAllocPoint><StyledCardIcon>{farm.allocPoint ? `${farm.allocPoint}x` : '0x'}</StyledCardIcon></StyledAllocPoint> 
       }
         <CardContent>
           <StyledContent>
-          <StyledCardActions>
-          <Sticker>{farm.allocPoint ? `${farm.allocPoint}x` : '0x'}</Sticker>
-          <StyledActionSpacer />
+          {/* <StyledCardActions> */}
+          {/* <Sticker>{farm.allocPoint ? `${farm.allocPoint}x` : '0x'}</Sticker> */}
+          {/* <StyledActionSpacer /> */}
           { isNirvana ? 
             <StyledDetail2>{`Nirvana! Congrats`}</StyledDetail2> : 
             <StyledDetail3>{`Chilling...`}</StyledDetail3>
           }
-          </StyledCardActions>
+          {/* </StyledCardActions> */}
           <Spacer/>
             <CardIcon>{farm.icon}</CardIcon>
             <StyledTitle>{farm.name}</StyledTitle>
@@ -562,7 +566,7 @@ const StyledCardIcon = styled.div`
   box-shadow: inset 4px 4px 8px ${props => props.theme.color.grey[300]},
     inset -6px -6px 12px ${props => props.theme.color.grey[100]};
   margin: 0 auto ${props => props.theme.spacing[3]}px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 700;
   margin: ${(props) => props.theme.spacing[2]}px 0 0;`
 
