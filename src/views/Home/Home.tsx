@@ -18,6 +18,13 @@ const Home: React.FC = () => {
         subtitle="Stake Uniswap LP tokens to claim your CHILL!"
       />
 
+      
+      <StyledInfo>
+        <b>Instruction</b>: Due to Chill.V2 is coming so chill minting has been paused for some time.
+      </StyledInfo>
+
+      <Spacer/>
+
       <Container>
         <Balances />
         <Spacer/>
